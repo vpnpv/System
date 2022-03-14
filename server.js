@@ -2903,7 +2903,7 @@ type these numbers to confirm: `
         if (e) throw e;
       });
     } else {
-      let ammount = (300, 500, 100, 200, 120, 150, 350, 320, 220, 250);
+      let ammount = (10, 20, 30, 40, 50, 60, 70, 80, 90, 300, 500, 100, 200, 120, 150, 350, 320, 220, 250);
       credits[author].credits += ammount;
       time[message.author.id] = Date.now();
       message.channel.send(
@@ -2989,7 +2989,7 @@ client.on("guildMemberAdd", async (member) => {
     //Member Name
     var nameSize = "12pt"; //حجم خط الاسم
     var nameKind = "Source Sans Pro (OT1)"; //نوع خط الاسم
-    var nameColor = "#ff9933"; //لون خط الاسم
+    var nameColor = "#c99c28"; //لون خط الاسم
 
     //Name Position
     var nameX = 247; //position x
@@ -3194,7 +3194,7 @@ Ex :
 });
 
 ///كود منشن بوتات
-
+/*
 client.on("message", (message) => {
   if (message.content === prefix + "ls") {
     var list_all = [];
@@ -3205,12 +3205,12 @@ client.on("message", (message) => {
     message.channel.send(list_all.join(", "));
   }
 });
-
+*/
 ////كود رابط
 ////تعديل غير اساسي
 
 client.on("message", (message) => {
-  if (message.content.split(" ")[0] === prefix + "رابط") {
+  if (message.content.split(" ")[0] === "رابط") {
     message.channel
       .createInvite({
         thing: true,
@@ -3219,7 +3219,7 @@ client.on("message", (message) => {
       })
       .then((invite) => message.author.send(invite.url));
     const embed = new Discord.RichEmbed()
-      .setColor("RANDOM")
+      .setColor("#c99c28")
       .setDescription(
         "** تم ارسال الرابط على الخاص ، اذا لم يصلك افتح الخاص  **"
       )
@@ -3230,7 +3230,7 @@ client.on("message", (message) => {
     message.channel.sendEmbed(embed).then((message) => {
       message.delete(10000);
     });
-    const Embed11 = new Discord.RichEmbed().setColor("RANDOM")
+    const Embed11 = new Discord.RichEmbed().setColor("#c99c28")
       .setDescription(`** مدة الرابط : يوم 
  عدد استخدامات الرابط : 5 **`);
 
@@ -3263,7 +3263,7 @@ client.on("message", (message) => {
       guild: message.guild.id,
     };
     channelfind.setName(
-      `Voice Online : ${
+      `legends : ${
         message.guild.members.filter((m) => m.voiceChannel).size
       }` ///تعديل غير اساسي تعديل اسم روم الفويس اونلاين
     );
