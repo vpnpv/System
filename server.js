@@ -884,7 +884,7 @@ client.on("message", async (message) => {
   var duration; //HactorMC
   var gMembers;
   var filter = (m) => m.author.id === message.author.id;
-  if (message.content.startsWith(prefix + "giveaway")) {
+  if (message.content.startsWith(prefix + "gw")) {
     //return message.channel.send('**في مشكله ببعض الاساسيات من فضلك انتظر شوي**');
     if (!message.guild.member(message.author).hasPermission("MANAGE_GUILD"))
       return message.channel.send(
@@ -1747,7 +1747,7 @@ client.on("ready", () => {
 });
 client.on("message", (message) => {
   if (message.content === "السلام عليكم") {
-    message.channel.send("**:heart:وعليكم السلام ورحمة الله وبركاته:heart:**");
+    message.channel.send("**وعليكم السلام ورحمة الله وبركاتة**");
     message.channel.sendFile("");
   }
 });
@@ -1841,7 +1841,7 @@ client.on("message", (message) => {
     });
   }
 });
-
+/*
 /////كود سرعة البوت او البينق
 client.on("message", (message) => {
   if (!message.channel.guild) return;
@@ -1861,7 +1861,7 @@ client.on("message", (message) => {
     message.channel.send(E1ping);
   }
 });
-
+*/
 let anti = JSON.parse(fs.readFileSync("./antigrefff.json", "UTF8"));
 let config = JSON.parse(fs.readFileSync("./server.json", "UTF8"));
 client.on("message", (message) => {
@@ -2714,7 +2714,6 @@ client.on("message", async (message) => {
     message.channel.send(" |** من فضلك اكتب الرساله الان...** ").then((msg) => {
       message.channel
         .awaitMessages(filter, {
-          //R.I.P Royal Bot!
           maxMatches: 1,
           time: 12000,
           errors: ["time"],
@@ -3712,7 +3711,7 @@ client.on("message", async (msg) => {
 
 //// تغير غير اساسي
 ///// كود ميوزك
-
+/*
 let cmds = {
   play: { cmd: "play", a: ["p", "شغل"] },
   skip: { cmd: "skip", a: ["s", "تخطى"] },
