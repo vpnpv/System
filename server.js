@@ -398,8 +398,6 @@ const SQLite = require("sqlite"); // SQLpackage
 const path = require("path"); // PATHpackage
 const invites = {}; // Codes
 
-ر
-
 client.on("message", (message) => {
   if (message.author.bot) return;
 
@@ -425,7 +423,7 @@ client.on("message", (message) => {
         .reply("** يجب عليك منشنت شخص اولاً**")
         .catch(console.error);
     const embed = new Discord.RichEmbed()
-      .setColor(0x00ae86)
+      .setColor("#c99c28")
       .setTimestamp()
       .addField("الأستعمال:", "اسكت/احكي")
       .addField(
@@ -599,13 +597,13 @@ client.on("message", (message) => {
           var usermentioned = message.mentions.members.first().id;
           var embed = new Discord.RichEmbed()
             .setTitle("Succes!")
-            .setColor("#000000")
+            .setColor("#c99c28")
             .setDescription(
               `✅ You Have Moved <@${usermentioned}> To Your Channel `
             );
           var embed = new Discord.RichEmbed()
             .setTitle(`You are Moved in ${message.guild.name} `)
-            .setColor("RANDOM")
+            .setColor("#c99c28")
             .setTitle(`✽ **Premium**`)
 
             .setDescription(
@@ -682,7 +680,7 @@ client.on("message", function (message) {
       } else {
         var manage = new Discord.RichEmbed()
           .setDescription("You Do Not Have Permission MANAGE_MESSAGES :(")
-          .setColor("RANDOM");
+          .setColor("#c99c28");
         message.channel.sendEmbed(manage);
         return;
       }
