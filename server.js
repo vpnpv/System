@@ -50,13 +50,10 @@ client.on("ready", () => {
 });
 
 //كود تغيير الحالة
-client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-  console.log(client.guilds.map((c) => `${c.name} : ${c.me.hasPermission(8)}`));
-  client.user.setStatus("dnd");
-
-  client.user.setActivity(`${prefix}help`, { type: "WATCHING" });
+client.on('ready' , () => {
+client.user.setActivity(`Vnland` , {type : 'STREAMING' , url : 'https://www.twitch.tv/vnland'})
 });
+
 
 client.on("message", (message) => {
   if (message.author.bot) return;
@@ -184,22 +181,22 @@ client.on("message", (pixelbot) => {
         .join(` `);
       let pixeluser = new Discord.RichEmbed() // itzZa1D - Codes Team.
         .setColor("#00000")
-        .setTitle(" :beginner: :heartpulse:   | Use  r Info") // itzZa1D - Codes Team.
+        .setTitle("   | User Info") // itzZa1D - Codes Team.
         .setAuthor(pixelbot.author.username, pixelbot.author.avatarURL)
-        .addField("**✽ Name :**   ", pixelbot.author.username, true)
-        .addField("**✽ Tag :**   ", pixelbot.author.discriminator, true)
-        .addField("**✽ ID :** ", pixelbot.author.id, true) // itzZa1D - Codes Team.
+        .addField("** Name :**   ", pixelbot.author.username, true)
+        .addField("** Tag :**   ", pixelbot.author.discriminator, true)
+        .addField("** ID :** ", pixelbot.author.id, true) // itzZa1D - Codes Team.
         .addField(
-          "**✽ Joined At :**   ",
+          "** Joined At :**   ",
           moment(pixelbot.joinedAt).format("D/M/YYYY h:mm a "),
           true
         )
         .addField(
-          "**✽ Created At :**    ",
+          "** Created At :**    ",
           moment(pixelbot.author.createdAt).format("D/M/YYYY h:mm a "),
           true
         )
-        .addField("**✽ Total invites :**    ", inviteCount, true)
+        .addField("** Total invites :**    ", inviteCount, true)
         .setTimestamp(); // itzZa1D - Codes Team.
 
       pixelbot.channel.sendEmbed(pixeluser).then((c) => {}); // itzZa1D - Codes Team.
@@ -212,9 +209,9 @@ client.on("message", (message) => {
   if (message.content === prefix + "bot") {
     const bot = new Discord.RichEmbed()
       .setAuthor(client.user.username, client.user.avatarURL)
-      .setColor("#00000")
+      .setColor("#c99c28")
       .addField(
-        "✽ **Bot Ping** : ",
+        " **Bot Ping** : ",
         `» ${Date.now() - client.createdTimestamp}` + " ms",
         true
       )
@@ -322,7 +319,7 @@ client.on("message", async (message) => {
           }** ]   `
         )
         .setImage("")
-        .setColor("RANDOM")
+        .setColor("#c99c28")
         .setTimestamp()
         .setFooter(Tag, Avatar);
 
@@ -367,7 +364,7 @@ client.on("message", (message) => {
 
     const kickembed = new Discord.RichEmbed()
       .setAuthor(`KICKED!`, user.displayAvatarURL)
-      .setColor("RANDOM")
+      .setColor("#c99c28")
       .setTimestamp()
       .addField("**User:**", "**[ " + `${user.tag}` + " ]**")
       .addField("**By:**", "**[ " + `${message.author.tag}` + " ]**")
@@ -387,7 +384,7 @@ client.on("message", (message) => {
       .then((user) => {
         avt = user;
         let avtEmbed = new Discord.RichEmbed()
-          .setColor("#36393e")
+          .setColor("#c99c28")
           .setAuthor(`${avt.username}'s Avatar`, message.author.avatarURL)
           .setImage(avt.avatarURL)
           .setFooter(`Avatar`, message.client.user.avatarURL);
@@ -401,50 +398,7 @@ const SQLite = require("sqlite"); // SQLpackage
 const path = require("path"); // PATHpackage
 const invites = {}; // Codes
 
-////كود معلومات السيرفر
-client.on("message", (message) => {
-  if (message.content.startsWith(prefix + "server")) {
-    if (!message.channel.guild)
-      return message.channel.send(` | This Command is used only in servers!`);
-    const millis = new Date().getTime() - message.guild.createdAt.getTime();
-    const now = new Date();
-    const verificationLevels = ["None", "Low", "Medium", "Insane", "Extreme"];
-    const days = millis / 1000 / 60 / 60 / 24;
-    var embed = new Discord.RichEmbed()
-      .setAuthor(message.guild.name, message.guild.iconURL)
-      .addField(":id:✽** Server ID:**", `» ${message.guild.id} `, true)
-      .addField(
-        ":calendar:✽** Created On**",
-        `» ${message.guild.createdAt.toLocaleString()}`,
-        true
-      )
-      .addField(":crown: ✽**Server Owner**", `**${message.guild.owner}**`, true)
-      .addField(
-        `✽** Members ** [${message.guild.members.size}]`,
-        `**${
-          message.guild.members.filter((c) => c.presence.status !== "offline")
-            .size
-        }** **Online**`,
-        true
-      )
-      .addField(
-        ":speech_balloon:✽** Channels **",
-        `» **${
-          message.guild.channels.filter((m) => m.type === "text").size
-        }**` +
-          " TexT | VoicE  " +
-          `**${
-            message.guild.channels.filter((m) => m.type === "voice").size
-          }** `,
-        true
-      )
-      .addField(":earth_africa:✽** Region **", ` ${message.guild.region}`, true)
-      .setImage("")
-
-      .setColor("#000000");
-    message.channel.sendEmbed(embed);
-  }
-});
+ر
 
 client.on("message", (message) => {
   if (message.author.bot) return;
