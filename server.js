@@ -1008,7 +1008,8 @@ client.on("message", async (message) => {
 
 ///تعديل غير اساسي
 ///تقدر الصورة الخلفية ، شوف الشرح الرابط فوق اول الكود
-/// كود الوان
+///كود الوان
+/*
 client.on("message", (message) => {
   if (!message.guild || message.author.bot) return;
   if (message.content === prefix + "colors") {
@@ -1066,7 +1067,7 @@ client.on("message", (message) => {
     });
   }
 });
-
+*/
 /// كود تعين اللوق
 const log = JSON.parse(fs.readFileSync("./log.json", "utf8"));
 
