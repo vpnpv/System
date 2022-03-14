@@ -227,6 +227,7 @@ client.on("message", (message) => {
   }
 });
 */
+
 client.on("message", (message) => {
   if (message.author.codes) return;
   if (!message.content.startsWith(prefix)) return;
@@ -388,7 +389,8 @@ client.on("message", (message) => {
           .setColor("#c99c28")
           .setAuthor(`${avt.username}'s Avatar`, message.author.avatarURL)
           .setImage(avt.avatarURL)
-          .setFooter(`Avatar`, message.client.user.avatarURL);
+          .setFooter('Avatar', message.client.user.avatarURL)
+          .setTimestamp();
         message.channel.send(avtEmbed);
       })
       .catch(() => message.channel.send(`يجب عليك وضع ايدي الشخص`));
