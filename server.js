@@ -318,8 +318,8 @@ client.on("message", async (message) => {
             inviteCode.code &&
             inviteCode.code.includes("discord.gg")
               ? inviteCode.code
-              : `https://discord.gg/${inviteCode.code || "vHmbKTE"}`
-          }** ]   `
+              : `https://discord.gg/${inviteCode.code}`
+          }** ]  ` 
         )
         .setImage("")
         .setColor("#c99c28")
@@ -529,7 +529,7 @@ client.on("message", (message) => {
     }
   }
 });
-
+/*
 //// كود فتح واغلاق الروم
 client.on("message", (message) => {
   if (message.content === prefix + "close") {
@@ -565,7 +565,7 @@ client.on("message", (message) => {
 client.on("error", (err) => {
   console.log(err);
 });
-
+*/
 client.on("messageCreate", async (message) => {
   let args = message.cleanContent.split(" ");
   if (args[0] == `${prefix}roles`) {
