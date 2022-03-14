@@ -54,7 +54,7 @@ client.on('ready' , () => {
 client.user.setActivity(`Vnland` , {type : 'STREAMING' , url : 'https://www.twitch.tv/vnland'})
 });
 
-
+/*
 client.on("message", (message) => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
@@ -70,14 +70,14 @@ client.on("message", (message) => {
         "**ADMINISTRATOR ليس لديك صلاحيات :rolling_eyes:**"
       );
 
-    message.channel.send("`#` " + args.join("  "));
+    message.channel.send( args.join("  "));
     message.delete();
   }
 });
-
+*/
 ////كود تيكت
 client.on("message", (message) => {
-  if (message.content.startsWith(prefix + "new")) {
+  if (message.content.startsWith(prefix + "تكت")) {
     const reason = message.content.split(" ").slice(1).join(" ");
     if (!message.guild.roles.exists((gg) => gg.id === "909940957313650710"))
       return message.channel.send(`لازم تسوي رتبة اسمها \`Support Team\`.`);
