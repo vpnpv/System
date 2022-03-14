@@ -3269,7 +3269,7 @@ client.on("message", (message) => {
     );
     message.channel.send("**Done The Voice Online  Is Turned On**");
   }
-  if (message.content.startsWith(prefix + "vc off")) {
+  if (message.content.startsWith(prefix + "vcoff")) {
     // ايقاف الفويس اونلاين
     if (!message.member.hasPermission("MANAGE_GUILD"))
       return message.channel.send(
@@ -3693,7 +3693,7 @@ client.on("message", async (msg) => {
   if (command === `avatar`) {
     if (msg.channel.type === "dm")
       return msg.channel.send(
-        "Nope Nope!! u can't use avatar command in DMs (:"
+        "u can't use avatar command in DMs (:"
       );
     let mentions = msg.mentions.members.first();
     if (!mentions) {
@@ -4309,7 +4309,7 @@ client.on("message", async (msg) => {
     }
   }
 });
-
+*/
 //// مهم
 /// {} عند عمل ريمكس للبوت احذف مايوجد بملفات الجيسون وحط قوسين مثل
 //// يجب ان يكون البوت رتبة اقل من رتبة البوتات الموثوقة والكبيرة مثل داينو بوت وبروبوت والاخرى لكي لا يعطيهم باند
