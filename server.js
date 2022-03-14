@@ -22,9 +22,9 @@ const client = new Client({ disableEveryone: true });
 const ytdl = require("ytdl-core");
 const canvas = require("canvas");
 const convert = require("hh-mm-ss");
-const fetchVideoInfo = require("youtube-info");
+//const fetchVideoInfo = require("youtube-info");
 const botversion = require("./package.json").version;
-const simpleytapi = require("simple-youtube-api");
+//const simpleytapi = require("simple-youtube-api");
 const moment = require("moment");
 const fs = require("fs");
 const util = require("util");
@@ -35,11 +35,11 @@ const jimp = require("jimp");
 const { get } = require("snekfetch");
 const guild = require("guild");
 const dateFormat = require("dateformat");
-const YouTube = require("simple-youtube-api");
-const youtube = new YouTube("AIzaSyDGW8m0K6tXlubW7QEXrjyroFXGrQY_gkw"); //تعديل اساسي سوي اي بي اي جديد
+//const YouTube = require("simple-youtube-api");
+//const youtube = new YouTube("AIzaSyDGW8m0K6tXlubW7QEXrjyroFXGrQY_gkw"); //تعديل اساسي سوي اي بي اي جديد
 const hastebins = require("hastebin-gen");
-const getYoutubeID = require("get-youtube-id");
-const yt_api_key = "AIzaSyDGW8m0K6tXlubW7QEXrjyroFXGrQY_gkw"; ///تعديل اساسي سوي اي بي اي جديد
+//const getYoutubeID = require("get-youtube-id");
+//const yt_api_key = "AIzaSyDGW8m0K6tXlubW7QEXrjyroFXGrQY_gkw"; ///تعديل اساسي سوي اي بي اي جديد
 const pretty = require("pretty-ms");
 client.login(process.env.TOKEN); ///توكن البوت
 const queue = new Map();
@@ -114,7 +114,8 @@ client.on("message", (message) => {
             `مرحبا ${message.author.username}!`,
             `الرجاء كتابه مشكلتك و انتظار الادارة.`
           )
-          .setTimestamp();
+          .setTimestamp()
+          .setImage('https://cdn.discordapp.com/attachments/951571792466698240/951572228976283698/FB9A672E-2F51-4466-A7E9-AD3E397B7B15.jpg');
         c.send({
           embed: embed,
         });
@@ -3303,7 +3304,7 @@ client.on("voiceStateUpdate", (oldMember, newMember) => {
     if (!channel) return;
     let guildid = vojson[oldMember.guild.id].guild;
     channel.setName(
-      `Voice Online : ${
+      `legends : ${
         oldMember.guild.members.filter((m) => m.voiceChannel).size
       }` ///تعديل غير اساسي تغير اسم روم الفويس اونلاين
     );
