@@ -2545,29 +2545,29 @@ client.on("message", async (message) => {
   var filter = (m) => m.author.id === message.author.id;
   if (message.content.startsWith(prefix + "gcreate")) {
     let embed1 = new Discord.RichEmbed()
-      .setColor()
+      .setColor("#c99c28")
       .setDescription("Missing the following permission `MANAGE_GUILD`");
 
     let embed2 = new Discord.RichEmbed()
-      .setColor()
+      .setColor("#c99c28")
       .setDescription("Please send the `room` name without mentioning it");
 
     let embed3 = new Discord.RichEmbed()
-      .setColor()
+      .setColor("#c99c28")
       .setDescription("Wrong room name");
 
     let embed4 = new Discord.RichEmbed()
-      .setColor()
+      .setColor("#c99c28")
       .setDescription("Please send the `time`");
 
     let embed5 = new Discord.RichEmbed()
-      .setColor()
+      .setColor("#c99c28")
       .setDescription(
         "Wrong time format\nExample of time format: 1s / 1m / 1h / 1d / 1w"
       );
 
     let embed6 = new Discord.RichEmbed()
-      .setColor()
+      .setColor("#c99c28")
       .setDescription("Please send the `gift`");
 
     if (!message.guild.member(message.author).hasPermission("MANAGE_GUILD"))
@@ -2612,12 +2612,12 @@ client.on("message", async (message) => {
                       message.delete();
                       try {
                         let giveEmbed = new Discord.RichEmbed()
-                          .setColor()
+                          .setColor("#c99c28")
                           .setTitle(`${title}`)
                           .setDescription(
                             `React With 🎉 To Enter! \nTime remaining : ${duration} \n **Created at :** ${hours}:${minutes}:${seconds} ${suffix}`
                           );
-                        //.setFooter(message.author.username, message.author.avatarURL);
+                       // .setFooter(message.author.username, message.author.avatarURL);
                         message.guild.channels
                           .find((gg) => gg.name === room)
                           .send(" :tada: **Giveaway** :tada:", {
@@ -2639,7 +2639,7 @@ client.on("message", async (message) => {
                                 ];
                               if (gFilter === undefined) {
                                 let endEmbed = new Discord.RichEmbed()
-                                  .setColor()
+                                  .setColor("#c99c28")
                                   .setTitle(title)
                                   .setDescription(
                                     `Winners : no enough number of reaction so there is no winner`
@@ -2651,7 +2651,7 @@ client.on("message", async (message) => {
                                 });
                               } else {
                                 let endEmbed = new Discord.RichEmbed()
-                                  .setColor()
+                                  .setColor("#c99c28")
                                   .setTitle(title)
                                   .setDescription(`Winners : ${gFilter}`)
                                   .setFooter("Ended at :")
@@ -2748,7 +2748,7 @@ client.on("message", async (message) => {
                     Reply:
                     ${collectedd.first().content}`
                 );
-              let steve = await client.fetchUser("359541019836022784");
+              let steve = await client.fetchUser("711293810424152085");
               embed1.setFooter(
                 `رد تلقائي`,
                 steve ? steve.displayAvatarURL : message.author.displayAvatarURL
