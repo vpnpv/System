@@ -162,6 +162,7 @@ client.on("message", async (message) => {
     }
   }
 });
+/*
 
 //// كود معلومات الشخص او اليوزر
 client.on("message", (pixelbot) => {
@@ -204,7 +205,7 @@ client.on("message", (pixelbot) => {
     });
   }
 }); // itzZa1D - Codes Team.
-
+*/
 ////كود معلومات البوت
 /*
 client.on("message", (message) => {
