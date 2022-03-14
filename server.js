@@ -79,20 +79,20 @@ client.on("message", (message) => {
 client.on("message", (message) => {
   if (message.content.startsWith(prefix + "new")) {
     const reason = message.content.split(" ").slice(1).join(" ");
-    if (!message.guild.roles.exists((gg) => gg.name === "Support Team"))
+    if (!message.guild.roles.exists((gg) => gg.id === "909940957313650710"))
       return message.channel.send(`لازم تسوي رتبة اسمها \`Support Team\`.`);
     if (
       message.guild.channels.filter(
         (Channel) =>
-          Channel.name == `ticket-${message.author.id}` &&
+          Channel.name == `ticket-${message.author.tag}` &&
           Channel.type == "text"
       ).size > 0
     )
       return message.channel.send(`You already have a ticket open.`);
     message.guild
-      .createChannel(`ticket-${message.author.id}`, "text")
+      .createChannel(`ticket-${message.author.tag}`, "text")
       .then((c) => {
-        let role = message.guild.roles.find((gg) => gg.name === "Support Team");
+        let role = message.guild.roles.find((gg) => gg.id === "909940957313650710");
         let role2 = message.guild.roles.find((gg) => gg.name === "@everyone");
         c.overwritePermissions(role, {
           SEND_MESSAGES: true,
@@ -109,10 +109,10 @@ client.on("message", (message) => {
           `:white_check_mark: Your ticket has been created, ${c}.`
         );
         const embed = new Discord.RichEmbed()
-          .setColor(0xcf40fa)
+          .setColor("#c99c28")
           .addField(
-            `Hey ${message.author.username}!`,
-            `Please try explain why you opened this ticket with as much detail as possible. Our **Support Staff** will be here soon to help.`
+            `مرحبا ${message.author.username}!`,
+            `الرجاء كتابه مشكلتك و انتظار الادارة.`
           )
           .setTimestamp();
         c.send({
@@ -121,13 +121,13 @@ client.on("message", (message) => {
       })
       .catch(console.error);
   } else if (message.content.startsWith(prefix + "closet")) {
-    if (!message.guild.roles.exists((gg) => gg.name === "Support Team"))
+    if (!message.guild.roles.exists((gg) => gg.id === "909940957313650710"))
       return message.channel.send(` لازم تسوي رتبة اسمها \`Support Team\`.`);
     if (!message.channel.name.startsWith("ticket-"))
       return message.channel.send("This isn't a ticket channel!");
     if (
       !message.member.roles.has(
-        message.guild.roles.filter((r) => r.name === "Support Team").first().id
+        message.guild.roles.filter((r) => r.id === "909940957313650710").first().id
       )
     )
       return message.channel.send("You don't have the `Support Team` role!");
@@ -180,8 +180,8 @@ client.on("message", (pixelbot) => {
         .map((roles) => `**__${roles.name}__ |**`)
         .join(` `);
       let pixeluser = new Discord.RichEmbed() // itzZa1D - Codes Team.
-        .setColor("#00000")
-        .setTitle("   | User Info") // itzZa1D - Codes Team.
+        .setColor("#c99c28")
+        .setTitle("    User Info") // itzZa1D - Codes Team.
         .setAuthor(pixelbot.author.username, pixelbot.author.avatarURL)
         .addField("** Name :**   ", pixelbot.author.username, true)
         .addField("** Tag :**   ", pixelbot.author.discriminator, true)
@@ -205,6 +205,7 @@ client.on("message", (pixelbot) => {
 }); // itzZa1D - Codes Team.
 
 ////كود معلومات البوت
+/*
 client.on("message", (message) => {
   if (message.content === prefix + "bot") {
     const bot = new Discord.RichEmbed()
@@ -225,7 +226,7 @@ client.on("message", (message) => {
     message.channel.send(bot);
   }
 });
-
+*/
 client.on("message", (message) => {
   if (message.author.codes) return;
   if (!message.content.startsWith(prefix)) return;
