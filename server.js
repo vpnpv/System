@@ -41,7 +41,7 @@ const hastebins = require("hastebin-gen");
 const getYoutubeID = require("get-youtube-id");
 const yt_api_key = "AIzaSyDGW8m0K6tXlubW7QEXrjyroFXGrQY_gkw"; ///تعديل اساسي سوي اي بي اي جديد
 const pretty = require("pretty-ms");
-client.login(process.env.TOKEN);///توكن البوت 
+client.login(process.env.TOKEN); ///توكن البوت
 const queue = new Map();
 var table = require("table").table;
 const Discord = require("discord.js");
@@ -52,13 +52,13 @@ client.on("ready", () => {
 //كود تغيير الحالة
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  console.log(client.guilds.map(c => `${c.name} : ${c.me.hasPermission(8)}`));
+  console.log(client.guilds.map((c) => `${c.name} : ${c.me.hasPermission(8)}`));
   client.user.setStatus("dnd");
 
   client.user.setActivity(`${prefix}help`, { type: "WATCHING" });
 });
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
 
@@ -79,17 +79,14 @@ client.on("message", message => {
 });
 
 ////كود تيكت
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.startsWith(prefix + "new")) {
-    const reason = message.content
-      .split(" ")
-      .slice(1)
-      .join(" ");
-    if (!message.guild.roles.exists(gg => gg.name === "Support Team"))
+    const reason = message.content.split(" ").slice(1).join(" ");
+    if (!message.guild.roles.exists((gg) => gg.name === "Support Team"))
       return message.channel.send(`لازم تسوي رتبة اسمها \`Support Team\`.`);
     if (
       message.guild.channels.filter(
-        Channel =>
+        (Channel) =>
           Channel.name == `ticket-${message.author.id}` &&
           Channel.type == "text"
       ).size > 0
@@ -97,19 +94,19 @@ client.on("message", message => {
       return message.channel.send(`You already have a ticket open.`);
     message.guild
       .createChannel(`ticket-${message.author.id}`, "text")
-      .then(c => {
-        let role = message.guild.roles.find(gg => gg.name === "Support Team");
-        let role2 = message.guild.roles.find(gg => gg.name === "@everyone");
+      .then((c) => {
+        let role = message.guild.roles.find((gg) => gg.name === "Support Team");
+        let role2 = message.guild.roles.find((gg) => gg.name === "@everyone");
         c.overwritePermissions(role, {
           SEND_MESSAGES: true,
-          READ_MESSAGES: true
+          READ_MESSAGES: true,
         });
         c.overwritePermissions(message.author, {
           SEND_MESSAGES: true,
-          READ_MESSAGES: true
+          READ_MESSAGES: true,
         });
         c.overwritePermissions(message.guild.id, {
-          READ_MESSAGES: false
+          READ_MESSAGES: false,
         });
         message.channel.send(
           `:white_check_mark: Your ticket has been created, ${c}.`
@@ -122,28 +119,28 @@ client.on("message", message => {
           )
           .setTimestamp();
         c.send({
-          embed: embed
+          embed: embed,
         });
       })
       .catch(console.error);
   } else if (message.content.startsWith(prefix + "closet")) {
-    if (!message.guild.roles.exists(gg => gg.name === "Support Team"))
+    if (!message.guild.roles.exists((gg) => gg.name === "Support Team"))
       return message.channel.send(` لازم تسوي رتبة اسمها \`Support Team\`.`);
     if (!message.channel.name.startsWith("ticket-"))
       return message.channel.send("This isn't a ticket channel!");
     if (
       !message.member.roles.has(
-        message.guild.roles.filter(r => r.name === "Support Team").first().id
+        message.guild.roles.filter((r) => r.name === "Support Team").first().id
       )
     )
       return message.channel.send("You don't have the `Support Team` role!");
     message.channel
       .delete()
-      .catch(e => message.channel.send("Check my permissions!"));
+      .catch((e) => message.channel.send("Check my permissions!"));
   }
 });
 
-client.on("message", async message => {
+client.on("message", async (message) => {
   if (!message.guild || message.author.bot) return;
   let args = message.content.split(" ");
   if (args[0] == `${prefix}cr`) {
@@ -154,14 +151,12 @@ client.on("message", async message => {
       return;
     if (!args[1] || !args[2])
       return message.reply(
-        `Usage: ${args[0]} [role color] [role name]\nExample: ${
-          args[0]
-        } blue Admin`
+        `Usage: ${args[0]} [role color] [role name]\nExample: ${args[0]} blue Admin`
       );
     try {
       let role = await message.guild.createRole({
         name: args.slice(2).join(" ") || "new role",
-        color: args[1].toUpperCase() || null
+        color: args[1].toUpperCase() || null,
       });
       await message.reply(`Done, Created **${role.name}** role!`);
     } catch (e) {
@@ -171,21 +166,21 @@ client.on("message", async message => {
 });
 
 //// كود معلومات الشخص او اليوزر
-client.on("message", pixelbot => {
+client.on("message", (pixelbot) => {
   // itzZa1D - Codes Team.
   if (pixelbot.content.startsWith(prefix + "user")) {
     // itzZa1D - Codes Team.
     if (pixelbot.author.bot) return;
     if (!pixelbot.guild)
       return pixelbot.reply("**:x: - This Command is only done on Servers**");
-    pixelbot.guild.fetchInvites().then(invites => {
+    pixelbot.guild.fetchInvites().then((invites) => {
       // itzZa1D - Codes Team.
       let personalInvites = invites.filter(
-        i => i.inviter.id === pixelbot.author.id
+        (i) => i.inviter.id === pixelbot.author.id
       );
       let inviteCount = personalInvites.reduce((p, v) => v.uses + p, 0);
       var roles = pixelbot.member.roles
-        .map(roles => `**__${roles.name}__ |**`)
+        .map((roles) => `**__${roles.name}__ |**`)
         .join(` `);
       let pixeluser = new Discord.RichEmbed() // itzZa1D - Codes Team.
         .setColor("#00000")
@@ -207,13 +202,13 @@ client.on("message", pixelbot => {
         .addField("**✽ Total invites :**    ", inviteCount, true)
         .setTimestamp(); // itzZa1D - Codes Team.
 
-      pixelbot.channel.sendEmbed(pixeluser).then(c => {}); // itzZa1D - Codes Team.
+      pixelbot.channel.sendEmbed(pixeluser).then((c) => {}); // itzZa1D - Codes Team.
     });
   }
 }); // itzZa1D - Codes Team.
 
 ////كود معلومات البوت
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content === prefix + "bot") {
     const bot = new Discord.RichEmbed()
       .setAuthor(client.user.username, client.user.avatarURL)
@@ -234,7 +229,7 @@ client.on("message", message => {
   }
 });
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.author.codes) return;
   if (!message.content.startsWith(prefix)) return;
 
@@ -272,7 +267,7 @@ client.on("message", message => {
     );
   }
 });
-client.on("message", async message => {
+client.on("message", async (message) => {
   if (message.content.startsWith(prefix + "inf")) {
     //// وهون الامر طبعا
     let oi = message.mentions.users.first()
@@ -288,10 +283,10 @@ client.on("message", async message => {
       ? message.mentions.users.first().avatarURL
       : message.author.avatarURL;
 
-    message.guild.fetchInvites().then(invs => {
+    message.guild.fetchInvites().then((invs) => {
       let member = client.guilds.get(message.guild.id).members.get(oi);
-      let personalInvites = invs.filter(i => i.inviter.id === oi);
-      let urll = invs.filter(i => i.inviter.id === oi);
+      let personalInvites = invs.filter((i) => i.inviter.id === oi);
+      let urll = invs.filter((i) => i.inviter.id === oi);
       let link = urll.reduce(
         (p, v) =>
           v.url + ` , Total de membros recrutados no convite: ${v.uses}.\n` + p,
@@ -336,7 +331,7 @@ client.on("message", async message => {
   }
 });
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.author.x5bz) return;
   if (!message.content.startsWith(prefix)) return;
 
@@ -355,10 +350,7 @@ client.on("message", message => {
     if (!message.guild.member(client.user).hasPermission("KICK_MEMBERS"))
       return message.reply("**I Don't Have ` KICK_MEMBERS ` Permission**");
     let user = message.mentions.users.first();
-    let reason = message.content
-      .split(" ")
-      .slice(2)
-      .join(" ");
+    let reason = message.content.split(" ").slice(2).join(" ");
     if (message.mentions.users.size < 1) return message.reply("**منشن شخص**");
     if (!reason) return message.reply("**اكتب سبب الطرد**");
     if (!message.guild.member(user).kickable)
@@ -381,18 +373,18 @@ client.on("message", message => {
       .addField("**By:**", "**[ " + `${message.author.tag}` + " ]**")
       .addField("**Reason:**", "**[ " + `${reason}` + " ]**");
     message.channel.send({
-      embed: kickembed
+      embed: kickembed,
     });
   }
 });
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.split(" ")[0] === prefix + "avt") {
     if (message.author.bot || message.channel.type == "dm") return;
     var args = message.content.split(" ")[1];
     var avt = args || message.author.id;
     client
       .fetchUser(avt)
-      .then(user => {
+      .then((user) => {
         avt = user;
         let avtEmbed = new Discord.RichEmbed()
           .setColor("#36393e")
@@ -410,7 +402,7 @@ const path = require("path"); // PATHpackage
 const invites = {}; // Codes
 
 ////كود معلومات السيرفر
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.startsWith(prefix + "server")) {
     if (!message.channel.guild)
       return message.channel.send(` | This Command is used only in servers!`);
@@ -430,16 +422,20 @@ client.on("message", message => {
       .addField(
         `✽** Members ** [${message.guild.members.size}]`,
         `**${
-          message.guild.members.filter(c => c.presence.status !== "offline")
+          message.guild.members.filter((c) => c.presence.status !== "offline")
             .size
         }** **Online**`,
         true
       )
       .addField(
         ":speech_balloon:✽** Channels **",
-        `» **${message.guild.channels.filter(m => m.type === "text").size}**` +
+        `» **${
+          message.guild.channels.filter((m) => m.type === "text").size
+        }**` +
           " TexT | VoicE  " +
-          `**${message.guild.channels.filter(m => m.type === "voice").size}** `,
+          `**${
+            message.guild.channels.filter((m) => m.type === "voice").size
+          }** `,
         true
       )
       .addField(":earth_africa:✽** Region **", ` ${message.guild.region}`, true)
@@ -450,7 +446,7 @@ client.on("message", message => {
   }
 });
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.author.bot) return;
 
   let command = message.content.split(" ")[0];
@@ -462,10 +458,10 @@ client.on("message", message => {
         .reply("** لا يوجد لديك برمشن 'Manage Roles' **")
         .catch(console.error);
     let user = message.mentions.users.first();
-    let modlog = client.channels.find(gg => gg.name === "log");
+    let modlog = client.channels.find((gg) => gg.name === "log");
     let muteRole = client.guilds
       .get(message.guild.id)
-      .roles.find(gg => gg.name === "Muted");
+      .roles.find((gg) => gg.name === "Muted");
     if (!muteRole)
       return message
         .reply("** لا يوجد لديك رتبه الميوت 'Muted' **")
@@ -514,7 +510,7 @@ client.on("message", message => {
 });
 
 ////كود ميوت او اسكات
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.author.bot) return;
 
   let command = message.content.split(" ")[0];
@@ -526,10 +522,10 @@ client.on("message", message => {
         .reply("** لا يوجد لديك برمشن 'Manage Roles' **")
         .catch(console.error);
     let user = message.mentions.users.first();
-    let modlog = client.channels.find(gg => gg.name === "log");
+    let modlog = client.channels.find((gg) => gg.name === "log");
     let muteRole = client.guilds
       .get(message.guild.id)
-      .roles.find(gg => gg.name === "Muted");
+      .roles.find((gg) => gg.name === "Muted");
     if (!muteRole)
       return message
         .reply("** لا يوجد رتبة الميوت 'Muted' **")
@@ -579,7 +575,7 @@ client.on("message", message => {
 });
 
 //// كود فتح واغلاق الروم
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content === prefix + "close") {
     if (!message.channel.guild)
       return message.reply(" هذا الامر فقط للسيرفرات !!");
@@ -588,7 +584,7 @@ client.on("message", message => {
       return message.reply(" ليس لديك صلاحيات");
     message.channel
       .overwritePermissions(message.guild.id, {
-        SEND_MESSAGES: false
+        SEND_MESSAGES: false,
       })
       .then(() => {
         message.reply("**تم قفل الشات :no_entry: **");
@@ -602,7 +598,7 @@ client.on("message", message => {
       return message.reply("ليس لديك صلاحيات");
     message.channel
       .overwritePermissions(message.guild.id, {
-        SEND_MESSAGES: true
+        SEND_MESSAGES: true,
       })
       .then(() => {
         message.reply("**تم فتح الشات :white_check_mark:**");
@@ -610,24 +606,25 @@ client.on("message", message => {
   }
 });
 
-client.on("error", err => {
+client.on("error", (err) => {
   console.log(err);
 });
 
-client.on("messageCreate", async message => {
+client.on("messageCreate", async (message) => {
   let args = message.cleanContent.split(" ");
   if (args[0] == `${prefix}roles`) {
     let space = "                         ";
     let roles = message.guild.roles
-      .map(r => r)
+      .map((r) => r)
       .sort((a, b) => b.position - a.position);
     let rr = roles
       .map(
-        r =>
-          `${r.name +
+        (r) =>
+          `${
+            r.name +
             space.substring(r.name.length) +
-            message.guild.members.filter(m => m.roles.includes(r.id))
-              .length} members`
+            message.guild.members.filter((m) => m.roles.includes(r.id)).length
+          } members`
       )
       .join("\n");
     await message.channel.sebd(`\`\`\`${rr}\`\`\``);
@@ -635,7 +632,7 @@ client.on("messageCreate", async message => {
 });
 
 //// كود سحب شخص
-client.on("message", message => {
+client.on("message", (message) => {
   if (!message.channel.guild) return;
   if (message.content.startsWith(prefix + "move")) {
     if (message.member.hasPermission("MOVE_MEMBERS")) {
@@ -663,7 +660,7 @@ client.on("message", message => {
           message.guild.members
             .get(usermentioned)
             .setVoiceChannel(authorchannel)
-            .then(m => message.channel.send(embed));
+            .then((m) => message.channel.send(embed));
           message.guild.members.get(usermentioned).send(embed);
         } else {
           message.channel.send(
@@ -683,7 +680,7 @@ client.on("message", message => {
   }
 });
 
-client.on("message", function(message) {
+client.on("message", function (message) {
   if (!message.channel.guild) return;
   if (message.author.bot) return;
   if (message.author.id === client.user.id) return;
@@ -697,7 +694,7 @@ client.on("message", function(message) {
       if (!message.channel.guild) return;
       if (message.member.hasPermission(0x2000)) {
         if (!args[1]) {
-          message.channel.fetchMessages().then(messages => {
+          message.channel.fetchMessages().then((messages) => {
             message.channel.bulkDelete(messages);
             var messagesDeleted = messages.array().length;
             message.channel
@@ -709,13 +706,13 @@ client.on("message", function(message) {
                   ": عدد الرسائل التي تم مسحها" +
                   "```**"
               )
-              .then(m => m.delete(5000));
+              .then((m) => m.delete(5000));
           });
         } else {
           let messagecount = parseInt(args[1]);
           message.channel
             .fetchMessages({ limit: messagecount })
-            .then(messages => message.channel.bulkDelete(messages));
+            .then((messages) => message.channel.bulkDelete(messages));
           message.channel
             .send(
               " " +
@@ -725,7 +722,7 @@ client.on("message", function(message) {
                 ": عدد الرسائل التي تم مسحها" +
                 "```**"
             )
-            .then(m => m.delete(5000));
+            .then((m) => m.delete(5000));
           message.delete(60000);
         }
       } else {
@@ -739,7 +736,7 @@ client.on("message", function(message) {
 });
 ///تعديل غير اساسي
 ////كود هيلب
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.author.bot) return;
   if (message.content.startsWith(prefix + "help")) {
     if (message.author.id == message.guild.ownerID) {
@@ -822,7 +819,7 @@ client.on("message", message => {
 \`شرح البوت \` : <https://youtu.be/6B9nrQp02Rk>
 `);
         })
-        .then(e => {
+        .then((e) => {
           message.react("✅");
         })
         .catch(() => {
@@ -907,7 +904,7 @@ client.on("message", message => {
 
 `);
         })
-        .then(e => {
+        .then((e) => {
           message.react("✅");
         })
         .catch(() => {
@@ -924,12 +921,12 @@ client.on("message", message => {
 });
 
 ////كود قيف اوي
-client.on("message", async message => {
+client.on("message", async (message) => {
   var room;
   var title; //HactorMC
   var duration; //HactorMC
   var gMembers;
-  var filter = m => m.author.id === message.author.id;
+  var filter = (m) => m.author.id === message.author.id;
   if (message.content.startsWith(prefix + "giveaway")) {
     //return message.channel.send('**في مشكله ببعض الاساسيات من فضلك انتظر شوي**');
     if (!message.guild.member(message.author).hasPermission("MANAGE_GUILD"))
@@ -938,16 +935,16 @@ client.on("message", async message => {
       );
     message.channel
       .send(`**من فضلك اكتب اسم الروم بدون منشن ( # )**`)
-      .then(msgg => {
+      .then((msgg) => {
         message.channel
           .awaitMessages(filter, {
             max: 1, //HactorMC
             time: 20000,
-            errors: ["time"]
+            errors: ["time"],
           })
-          .then(collected => {
+          .then((collected) => {
             let room = message.guild.channels.find(
-              gg => gg.name === collected.first().content
+              (gg) => gg.name === collected.first().content
             );
             if (!room)
               return message.channel.send(
@@ -955,14 +952,14 @@ client.on("message", async message => {
               );
             room = collected.first().content;
             collected.first().delete();
-            msgg.edit("**اكتب مدة القيف اواي بالدقائق**").then(msg => {
+            msgg.edit("**اكتب مدة القيف اواي بالدقائق**").then((msg) => {
               message.channel
                 .awaitMessages(filter, {
                   max: 1, //HactorMC
                   time: 20000,
-                  errors: ["time"]
+                  errors: ["time"],
                 })
-                .then(collected => {
+                .then((collected) => {
                   if (isNaN(collected.first().content))
                     return message.channel.send(
                       ":heavy_multiplication_x:| **يجب عليك ان تحدد وقت زمني صحيح.. ``يجب عليك اعادة كتابة الامر``**"
@@ -973,14 +970,14 @@ client.on("message", async message => {
                     .edit(
                       ":eight_pointed_black_star:| **اكتب على ماذا تريد القيف اواي**"
                     )
-                    .then(msg => {
+                    .then((msg) => {
                       message.channel
                         .awaitMessages(filter, {
                           max: 1,
                           time: 20000,
-                          errors: ["time"]
+                          errors: ["time"],
                         })
-                        .then(collected => {
+                        .then((collected) => {
                           title = collected.first().content;
                           collected.first().delete();
                           try {
@@ -998,15 +995,15 @@ client.on("message", async message => {
                                 message.author.avatarURL
                               );
                             message.guild.channels
-                              .find(gg => gg.name === room)
+                              .find((gg) => gg.name === room)
                               .send(giveEmbed)
-                              .then(m => {
+                              .then((m) => {
                                 let re = m.react("🎉");
                                 setTimeout(() => {
                                   let users = m.reactions.get("🎉").users;
                                   let list = users
                                     .array()
-                                    .filter(u => u.id !== m.author.id);
+                                    .filter((u) => u.id !== m.author.id);
                                   let gFilter =
                                     list[
                                       Math.floor(Math.random() * list.length) +
@@ -1053,19 +1050,19 @@ client.on("message", async message => {
 ///تعديل غير اساسي
 ///تقدر الصورة الخلفية ، شوف الشرح الرابط فوق اول الكود
 /// كود الوان
-client.on("message", message => {
+client.on("message", (message) => {
   if (!message.guild || message.author.bot) return;
-  if (message.content == prefix + "colors") {
+  if (message.content === prefix + "colors") {
     var fsn = require("fs-nextra");
     fs.readdir("./colors", async (err, files) => {
       var f = files[Math.floor(Math.random() * files.length)];
       var { Canvas } = require("canvas-constructor");
       var x = 0;
       var y = 0;
-      if (message.guild.roles.filter(role => !isNaN(role.name)).size <= 0)
+      if (message.guild.roles.filter((role) => !isNaN(role.name)).size <= 0)
         return;
       message.guild.roles
-        .filter(role => !isNaN(role.name))
+        .filter((role) => !isNaN(role.name))
         .sort((b1, b2) => b1.name - b2.name)
         .forEach(() => {
           x += 100;
@@ -1084,9 +1081,9 @@ client.on("message", message => {
       x = 0;
       y = 150;
       message.guild.roles
-        .filter(role => !isNaN(role.name))
+        .filter((role) => !isNaN(role.name))
         .sort((b1, b2) => b1.name - b2.name)
-        .forEach(role => {
+        .forEach((role) => {
           x += 75;
           if (x > 100 * 10) {
             x = 75;
@@ -1114,10 +1111,10 @@ client.on("message", message => {
 /// كود تعين اللوق
 const log = JSON.parse(fs.readFileSync("./log.json", "utf8"));
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (!message.channel.guild) return;
   let room = message.content.split(" ").slice(1);
-  let findroom = message.guild.channels.find(r => r.name == room);
+  let findroom = message.guild.channels.find((r) => r.name == room);
   if (message.content.startsWith(prefix + "setLog")) {
     if (!message.channel.guild)
       return message.reply("**This Command Only For Servers**");
@@ -1137,15 +1134,15 @@ client.on("message", message => {
     message.channel.sendEmbed(embed);
     log[message.guild.id] = {
       channel: room,
-      onoff: "On"
+      onoff: "On",
     };
-    fs.writeFile("./log.json", JSON.stringify(log), err => {
+    fs.writeFile("./log.json", JSON.stringify(log), (err) => {
       if (err) console.error(err);
     });
   }
 });
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.startsWith(prefix + "toggleLog")) {
     if (!message.channel.guild)
       return message.reply("**This Command Only For Servers**");
@@ -1155,28 +1152,28 @@ client.on("message", message => {
       );
     if (!log[message.guild.id])
       log[message.guild.id] = {
-        onoff: "Off"
+        onoff: "Off",
       };
     if (log[message.guild.id].onoff === "Off")
       return [
         message.channel.send(`**The log Is __𝐎𝐍__ !**`),
-        (log[message.guild.id].onoff = "On")
+        (log[message.guild.id].onoff = "On"),
       ];
     if (log[message.guild.id].onoff === "On")
       return [
         message.channel.send(`**The log Is __𝐎𝐅𝐅__ !**`),
-        (log[message.guild.id].onoff = "Off")
+        (log[message.guild.id].onoff = "Off"),
       ];
-    fs.writeFile("./log.json", JSON.stringify(log), err => {
+    fs.writeFile("./log.json", JSON.stringify(log), (err) => {
       if (err)
-        console.error(err).catch(err => {
+        console.error(err).catch((err) => {
           console.error(err);
         });
     });
   }
 });
 
-client.on("messageDelete", message => {
+client.on("messageDelete", (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
   if (!message.guild.member(client.user).hasPermission("EMBED_LINKS")) return;
@@ -1184,11 +1181,11 @@ client.on("messageDelete", message => {
     return;
   if (!log[message.guild.id])
     log[message.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[message.guild.id].onoff === "Off") return;
   var logChannel = message.guild.channels.find(
-    c => c.name === `${log[message.guild.id].channel}`
+    (c) => c.name === `${log[message.guild.id].channel}`
   );
   if (!logChannel) return;
 
@@ -1213,11 +1210,11 @@ client.on("messageUpdate", (oldMessage, newMessage) => {
     return;
   if (!log[oldMessage.guild.id])
     log[oldMessage.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[oldMessage.guild.id].onoff === "Off") return;
   var logChannel = oldMessage.guild.channels.find(
-    c => c.name === `${log[oldMessage.guild.id].channel}`
+    (c) => c.name === `${log[oldMessage.guild.id].channel}`
   );
   if (!logChannel) return;
 
@@ -1236,20 +1233,20 @@ client.on("messageUpdate", (oldMessage, newMessage) => {
   logChannel.send(messageUpdate);
 });
 
-client.on("roleCreate", role => {
+client.on("roleCreate", (role) => {
   if (!role.guild.member(client.user).hasPermission("EMBED_LINKS")) return;
   if (!role.guild.member(client.user).hasPermission("VIEW_AUDIT_LOG")) return;
   if (!log[role.guild.id])
     log[role.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[role.guild.id].onoff === "Off") return;
   var logChannel = role.guild.channels.find(
-    c => c.name === `${log[role.guild.id].channel}`
+    (c) => c.name === `${log[role.guild.id].channel}`
   );
   if (!logChannel) return;
 
-  role.guild.fetchAuditLogs().then(logs => {
+  role.guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
 
@@ -1266,20 +1263,20 @@ client.on("roleCreate", role => {
     logChannel.send(roleCreate);
   });
 });
-client.on("roleDelete", role => {
+client.on("roleDelete", (role) => {
   if (!role.guild.member(client.user).hasPermission("EMBED_LINKS")) return;
   if (!role.guild.member(client.user).hasPermission("VIEW_AUDIT_LOG")) return;
   if (!log[role.guild.id])
     log[role.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[role.guild.id].onoff === "Off") return;
   var logChannel = role.guild.channels.find(
-    c => c.name === `${log[role.guild.id].channel}`
+    (c) => c.name === `${log[role.guild.id].channel}`
   );
   if (!logChannel) return;
 
-  role.guild.fetchAuditLogs().then(logs => {
+  role.guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
 
@@ -1302,15 +1299,15 @@ client.on("roleUpdate", (oldRole, newRole) => {
     return;
   if (!log[oldRole.guild.id])
     log[oldRole.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[oldRole.guild.id].onoff === "Off") return;
   var logChannel = oldRole.guild.channels.find(
-    c => c.name === `${log[oldRole.guild.id].channel}`
+    (c) => c.name === `${log[oldRole.guild.id].channel}`
   );
   if (!logChannel) return;
 
-  oldRole.guild.fetchAuditLogs().then(logs => {
+  oldRole.guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
 
@@ -1355,18 +1352,18 @@ client.on("roleUpdate", (oldRole, newRole) => {
   });
 });
 
-client.on("channelCreate", channel => {
+client.on("channelCreate", (channel) => {
   if (!channel.guild) return;
   if (!channel.guild.member(client.user).hasPermission("EMBED_LINKS")) return;
   if (!channel.guild.member(client.user).hasPermission("VIEW_AUDIT_LOG"))
     return;
   if (!log[channel.guild.id])
     log[channel.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[channel.guild.id].onoff === "Off") return;
   var logChannel = channel.guild.channels.find(
-    c => c.name === `${log[channel.guild.id].channel}`
+    (c) => c.name === `${log[channel.guild.id].channel}`
   );
   if (!logChannel) return;
 
@@ -1378,7 +1375,7 @@ client.on("channelCreate", channel => {
     var roomType = "Category";
   }
 
-  channel.guild.fetchAuditLogs().then(logs => {
+  channel.guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
 
@@ -1395,18 +1392,18 @@ client.on("channelCreate", channel => {
     logChannel.send(channelCreate);
   });
 });
-client.on("channelDelete", channel => {
+client.on("channelDelete", (channel) => {
   if (!channel.guild) return;
   if (!channel.guild.member(client.user).hasPermission("EMBED_LINKS")) return;
   if (!channel.guild.member(client.user).hasPermission("VIEW_AUDIT_LOG"))
     return;
   if (!log[channel.guild.id])
     log[channel.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[channel.guild.id].onoff === "Off") return;
   var logChannel = channel.guild.channels.find(
-    c => c.name === `${log[channel.guild.id].channel}`
+    (c) => c.name === `${log[channel.guild.id].channel}`
   );
   if (!logChannel) return;
 
@@ -1418,7 +1415,7 @@ client.on("channelDelete", channel => {
     var roomType = "Category";
   }
 
-  channel.guild.fetchAuditLogs().then(logs => {
+  channel.guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
 
@@ -1439,11 +1436,11 @@ client.on("channelUpdate", (oldChannel, newChannel) => {
   if (!oldChannel.guild) return;
   if (!log[oldChannel.guild.id])
     log[oldChannel.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[oldChannel.guild.id].onoff === "Off") return;
   var logChannel = oldChannel.guild.channels.find(
-    c => c.name === `${log[oldChannel.guild.id].channel}`
+    (c) => c.name === `${log[oldChannel.guild.id].channel}`
   );
   if (!logChannel) return;
 
@@ -1455,7 +1452,7 @@ client.on("channelUpdate", (oldChannel, newChannel) => {
     var channelType = "Category";
   }
 
-  oldChannel.guild.fetchAuditLogs().then(logs => {
+  oldChannel.guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
 
@@ -1479,9 +1476,11 @@ client.on("channelUpdate", (oldChannel, newChannel) => {
         .setThumbnail(userAvatar)
         .setColor("BLUE")
         .setDescription(
-          `**\n**:wrench: Successfully Edited **${channelType}** Channel Topic\n\n**Old Topic:**\n\`\`\`${oldChannel.topic ||
-            "NULL"}\`\`\`\n**New Topic:**\n\`\`\`${newChannel.topic ||
-            "NULL"}\`\`\`\n**Channel:** ${oldChannel} (ID: ${
+          `**\n**:wrench: Successfully Edited **${channelType}** Channel Topic\n\n**Old Topic:**\n\`\`\`${
+            oldChannel.topic || "NULL"
+          }\`\`\`\n**New Topic:**\n\`\`\`${
+            newChannel.topic || "NULL"
+          }\`\`\`\n**Channel:** ${oldChannel} (ID: ${
             oldChannel.id
           })\n**By:** <@${userID}> (ID: ${userID})`
         )
@@ -1498,15 +1497,15 @@ client.on("guildBanAdd", (guild, user) => {
   if (!guild.member(client.user).hasPermission("VIEW_AUDIT_LOG")) return;
   if (!log[guild.id])
     log[guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[guild.id].onoff === "Off") return;
   var logChannel = guild.channels.find(
-    c => c.name === `${log[guild.id].channel}`
+    (c) => c.name === `${log[guild.id].channel}`
   );
   if (!logChannel) return;
 
-  guild.fetchAuditLogs().then(logs => {
+  guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
 
@@ -1530,15 +1529,15 @@ client.on("guildBanRemove", (guild, user) => {
   if (!guild.member(client.user).hasPermission("VIEW_AUDIT_LOG")) return;
   if (!log[guild.id])
     log[guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[guild.id].onoff === "Off") return;
   var logChannel = guild.channels.find(
-    c => c.name === `${log[guild.id].channel}`
+    (c) => c.name === `${log[guild.id].channel}`
   );
   if (!logChannel) return;
 
-  guild.fetchAuditLogs().then(logs => {
+  guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
 
@@ -1562,15 +1561,15 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (!oldMember.guild) return;
   if (!log[oldMember.guild.id])
     log[oldMember.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[oldMember.guild.id].onoff === "Off") return;
   var logChannel = oldMember.guild.channels.find(
-    c => c.name === `${log[(oldMember, newMember.guild.id)].channel}`
+    (c) => c.name === `${log[(oldMember, newMember.guild.id)].channel}`
   );
   if (!logChannel) return;
 
-  oldMember.guild.fetchAuditLogs().then(logs => {
+  oldMember.guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userAvatar = logs.entries.first().executor.avatarURL;
     var userTag = logs.entries.first().executor.tag;
@@ -1601,11 +1600,11 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
     }
     if (oldMember.roles.size < newMember.roles.size) {
       let role = newMember.roles
-        .filter(r => !oldMember.roles.has(r.id))
+        .filter((r) => !oldMember.roles.has(r.id))
         .first();
       if (!log[oldMember.guild.id])
         log[oldMember.guild.id] = {
-          onoff: "Off"
+          onoff: "Off",
         };
       if (log[oldMember.guild.id].onoff === "Off") return;
       let roleAdded = new Discord.RichEmbed()
@@ -1622,11 +1621,11 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
     }
     if (oldMember.roles.size > newMember.roles.size) {
       let role = oldMember.roles
-        .filter(r => !newMember.roles.has(r.id))
+        .filter((r) => !newMember.roles.has(r.id))
         .first();
       if (!log[oldMember.guild.id])
         log[oldMember.guild.id] = {
-          onoff: "Off"
+          onoff: "Off",
         };
       if (log[(oldMember, newMember.guild.id)].onoff === "Off") return;
       let roleRemoved = new Discord.RichEmbed()
@@ -1645,7 +1644,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
   if (oldMember.guild.owner.id !== newMember.guild.owner.id) {
     if (!log[oldMember.guild.id])
       log[oldMember.guild.id] = {
-        onoff: "Off"
+        onoff: "Off",
       };
     if (log[(oldMember, newMember.guild.id)].onoff === "Off") return;
     let newOwner = new Discord.RichEmbed()
@@ -1668,15 +1667,15 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
     return;
   if (!log[voiceOld.guild.id])
     log[voiceOld.guild.id] = {
-      onoff: "Off"
+      onoff: "Off",
     };
   if (log[(voiceOld, voiceOld.guild.id)].onoff === "Off") return;
   var logChannel = voiceOld.guild.channels.find(
-    c => c.name === `${log[(voiceOld, voiceNew.guild.id)].channel}`
+    (c) => c.name === `${log[(voiceOld, voiceNew.guild.id)].channel}`
   );
   if (!logChannel) return;
 
-  voiceOld.guild.fetchAuditLogs().then(logs => {
+  voiceOld.guild.fetchAuditLogs().then((logs) => {
     var userID = logs.entries.first().executor.id;
     var userTag = logs.entries.first().executor.tag;
     var userAvatar = logs.entries.first().executor.avatarURL;
@@ -1699,7 +1698,7 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
     if (voiceOld.serverMute === true && voiceNew.serverMute === false) {
       if (!log[voiceOld.guild.id])
         log[voiceOld.guild.id] = {
-          onoff: "Off"
+          onoff: "Off",
         };
       if (log[(voiceOld, voiceOld.guild.id)].onoff === "Off") return;
       let serverUnmutev = new Discord.RichEmbed()
@@ -1719,7 +1718,7 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
     if (voiceOld.serverDeaf === false && voiceNew.serverDeaf === true) {
       if (!log[voiceOld.guild.id])
         log[voiceOld.guild.id] = {
-          onoff: "Off"
+          onoff: "Off",
         };
       if (log[(voiceOld, voiceOld.guild.id)].onoff === "Off") return;
       let serverDeafv = new Discord.RichEmbed()
@@ -1739,7 +1738,7 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
     if (voiceOld.serverDeaf === true && voiceNew.serverDeaf === false) {
       if (!log[voiceOld.guild.id])
         log[voiceOld.guild.id] = {
-          onoff: "Off"
+          onoff: "Off",
         };
       if (log[(voiceOld, voiceOld.guild.id)].onoff === "Off") return;
       let serverUndeafv = new Discord.RichEmbed()
@@ -1765,7 +1764,7 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
   ) {
     if (!log[voiceOld.guild.id])
       log[voiceOld.guild.id] = {
-        onoff: "Off"
+        onoff: "Off",
       };
     if (log[(voiceOld, voiceOld.guild.id)].onoff === "Off") return;
     let voiceLeave = new Discord.RichEmbed()
@@ -1789,7 +1788,7 @@ client.on("voiceStateUpdate", (voiceOld, voiceNew) => {
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content === "السلام عليكم") {
     message.channel.send("**:heart:وعليكم السلام ورحمة الله وبركاته:heart:**");
     message.channel.sendFile("");
@@ -1799,7 +1798,7 @@ client.on("message", message => {
 ////تعديل غير اساسي
 /// كود اختيار لون
 
-client.on("message", message => {
+client.on("message", (message) => {
   let args = message.content.split(" ").slice(1);
   if (message.content.split(" ")[0] == prefix + "color") {
     const embedd = new Discord.RichEmbed()
@@ -1834,7 +1833,7 @@ client.on("message", message => {
       .setColor(`${a.hexColor}`);
     message.channel.sendEmbed(embed);
     if (!args[0]) return;
-    setInterval(function() {});
+    setInterval(function () {});
     let count = 0;
     let ecount = 0;
     for (let x = 1; x < 201; x++) {
@@ -1853,11 +1852,11 @@ client.on("message", message => {
 
 ///// كود خروج الاعضاء
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.startsWith(prefix + "setby")) {
     let args = message.mentions.channels.first();
     if (!args)
-      message.channel.send("** منشن روم . ❌**").then(m => {
+      message.channel.send("** منشن روم . ❌**").then((m) => {
         m.delete(1500);
       });
     if (
@@ -1866,8 +1865,8 @@ client.on("message", message => {
       return message.channel.send("**ليس لديك صلاحيات . ❌**");
     message.channel.send(
       `**${args}.  | :ballot_box_with_check: |لقد تم شغيل المغادرة هنا**`
-    ); 
-    client.on("guildMemberAdd", member => {
+    );
+    client.on("guildMemberAdd", (member) => {
       if (member.user.bot) return;
       var embed = new Discord.RichEmbed()
         .setAuthor(member.user.username, member.user.avatarURL)
@@ -1879,7 +1878,7 @@ client.on("message", message => {
         .setColor("RANDOM")
         .setFooter(`نتمنى لكم الاستمتاع`);
 
-      var channel = member.guild.channels.find(gg => gg.name === "log"); //// تعديل اساسي
+      var channel = member.guild.channels.find((gg) => gg.name === "log"); //// تعديل اساسي
       if (!channel) return;
       channel.send({ embed: embed });
     });
@@ -1887,7 +1886,7 @@ client.on("message", message => {
 });
 
 /////كود سرعة البوت او البينق
-client.on("message", message => {
+client.on("message", (message) => {
   if (!message.channel.guild) return;
   if (message.content.startsWith(prefix + "ping")) {
     if (message.author.bot) return;
@@ -1908,16 +1907,13 @@ client.on("message", message => {
 
 let anti = JSON.parse(fs.readFileSync("./antigrefff.json", "UTF8"));
 let config = JSON.parse(fs.readFileSync("./server.json", "UTF8"));
-client.on("message", message => {
+client.on("message", (message) => {
   if (!message.channel.guild) return;
   let user = anti[message.guild.id + message.author.id];
-  let num = message.content
-    .split(" ")
-    .slice(2)
-    .join(" ");
+  let num = message.content.split(" ").slice(2).join(" ");
   if (!anti[message.guild.id + message.author.id])
     anti[message.guild.id + message.author.id] = {
-      actions: 0
+      actions: 0,
     };
   if (!config[message.guild.id])
     config[message.guild.id] = {
@@ -1927,7 +1923,7 @@ client.on("message", message => {
       roleDelLimit: 3,
       kickLimits: 3,
       roleCrLimits: 3,
-      time: 30
+      time: 30,
     };
   if (message.content.startsWith(prefix + "settings")) {
     if (message.author.id !== message.guild.owner.user.id)
@@ -1955,7 +1951,9 @@ client.on("message", message => {
       if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
       config[message.guild.id].roleDelLimit = num;
       message.channel.send(
-        `**:lock: | تم التغيير اِلي : ${config[message.guild.id].roleDelLimit}**`
+        `**:lock: | تم التغيير اِلي : ${
+          config[message.guild.id].roleDelLimit
+        }**`
       );
     }
     if (message.content.startsWith(prefix + "settings limitsroleC")) {
@@ -1963,7 +1961,9 @@ client.on("message", message => {
       if (isNaN(num)) return message.channel.send("**:1234: | أرقام فقط ! **");
       config[message.guild.id].roleCrLimits = num;
       message.channel.send(
-        `**:lock: | تم التغيير اِلي : ${config[message.guild.id].roleCrLimits}**`
+        `**:lock: | تم التغيير اِلي : ${
+          config[message.guild.id].roleCrLimits
+        }**`
       );
     }
     if (message.content.startsWith(prefix + "settings limitschannelD")) {
@@ -1991,19 +1991,19 @@ client.on("message", message => {
       );
     }
   }
-  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(e) {
+  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function (e) {
     if (e) throw e;
   });
-  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(e) {
+  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function (e) {
     if (e) throw e;
   });
 });
-client.on("channelDelete", async channel => {
+client.on("channelDelete", async (channel) => {
   const entry1 = await channel.guild
     .fetchAuditLogs({
-      type: "CHANNEL_DELETE"
+      type: "CHANNEL_DELETE",
     })
-    .then(audit => audit.entries.first());
+    .then((audit) => audit.entries.first());
   console.log(entry1.executor.username);
   const entry = entry1.executor;
   if (!config[channel.guild.id])
@@ -2014,11 +2014,11 @@ client.on("channelDelete", async channel => {
       roleDelLimit: 3,
       kickLimits: 3,
       roleCrLimits: 3,
-      time: 30
+      time: 30,
     };
   if (!anti[channel.guild.id + entry.id]) {
     anti[channel.guild.id + entry.id] = {
-      actions: 1
+      actions: 1,
     };
     setTimeout(() => {
       anti[channel.guild.id + entry.id].actions = "0";
@@ -2038,34 +2038,38 @@ client.on("channelDelete", async channel => {
       channel.guild.members
         .get(entry.id)
         .ban()
-        .catch(e =>
+        .catch((e) =>
           channel.guild.owner.send(
             `**⇏ | ${entry.username} قام بمسح الكثير من الرومات **`
           )
         );
       anti[channel.guild.id + entry.id].actions = "0";
-      fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
-      fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
+      fs.writeFile(
+        "./config.json",
+        JSON.stringify(config, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
+      fs.writeFile(
+        "./antigreff.json",
+        JSON.stringify(anti, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
     }
   }
 
-  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(e) {
+  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function (e) {
     if (e) throw e;
   });
-  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(e) {
+  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function (e) {
     if (e) throw e;
   });
 });
 
-client.on("channelCreate", async channel => {
+client.on("channelCreate", async (channel) => {
   if (!["text", "category", "voice"].includes(channel.type.toLowerCase()))
     return;
   if (!config[channel.guild.id])
@@ -2076,19 +2080,19 @@ client.on("channelCreate", async channel => {
       roleDelLimit: 3,
       kickLimits: 3,
       roleCrLimits: 3,
-      time: 30
+      time: 30,
     };
   const entry1 = await channel.guild
     .fetchAuditLogs({
-      type: "CHANNEL_CREATE"
+      type: "CHANNEL_CREATE",
     })
-    .then(audit => audit.entries.first());
+    .then((audit) => audit.entries.first());
   console.log(entry1.executor.username);
   const entry = entry1.executor;
 
   if (!anti[channel.guild.id + entry.id]) {
     anti[channel.guild.id + entry.id] = {
-      actions: 1
+      actions: 1,
     };
     setTimeout(() => {
       anti[channel.guild.id + entry.id].actions = "0";
@@ -2108,40 +2112,50 @@ client.on("channelCreate", async channel => {
       channel.guild.members
         .get(entry.id)
         .ban()
-        .catch(e =>
+        .catch((e) =>
           channel.guild.owner.send(
             `**⇏ | ${entry.username} قام بمسح الكثير من الرومات **`
           )
         );
       anti[channel.guild.id + entry.id].actions = "0";
-      fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
-      fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
+      fs.writeFile(
+        "./config.json",
+        JSON.stringify(config, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
+      fs.writeFile(
+        "./antigreff.json",
+        JSON.stringify(anti, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
     }
 
-    fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(e) {
-      if (e) throw e;
-    });
-    fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(
-      e
-    ) {
-      if (e) throw e;
-    });
+    fs.writeFile(
+      "./config.json",
+      JSON.stringify(config, null, 2),
+      function (e) {
+        if (e) throw e;
+      }
+    );
+    fs.writeFile(
+      "./antigreff.json",
+      JSON.stringify(anti, null, 2),
+      function (e) {
+        if (e) throw e;
+      }
+    );
   }
 });
-client.on("roleDelete", async channel => {
+client.on("roleDelete", async (channel) => {
   const entry1 = await channel.guild
     .fetchAuditLogs({
-      type: "ROLE_DELETE"
+      type: "ROLE_DELETE",
     })
-    .then(audit => audit.entries.first());
+    .then((audit) => audit.entries.first());
   console.log(entry1.executor.username);
   const entry = entry1.executor;
   if (!config[channel.guild.id])
@@ -2152,11 +2166,11 @@ client.on("roleDelete", async channel => {
       roleDelLimit: 3,
       kickLimits: 3,
       roleCrLimits: 3,
-      time: 30
+      time: 30,
     };
   if (!anti[channel.guild.id + entry.id]) {
     anti[channel.guild.id + entry.id] = {
-      actions: 1
+      actions: 1,
     };
     setTimeout(() => {
       anti[channel.guild.id + entry.id].actions = "0";
@@ -2176,39 +2190,43 @@ client.on("roleDelete", async channel => {
       channel.guild.members
         .get(entry.id)
         .ban()
-        .catch(e =>
+        .catch((e) =>
           channel.guild.owner.send(
             `**⇏ | ${entry.username} قام بمسح الكثير من الرتب **`
           )
         );
       anti[channel.guild.id + entry.id].actions = "0";
-      fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
-      fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
+      fs.writeFile(
+        "./config.json",
+        JSON.stringify(config, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
+      fs.writeFile(
+        "./antigreff.json",
+        JSON.stringify(anti, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
     }
   }
 
-  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(e) {
+  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function (e) {
     if (e) throw e;
   });
-  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(e) {
+  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function (e) {
     if (e) throw e;
   });
 });
 
-client.on("roleCreate", async channel => {
+client.on("roleCreate", async (channel) => {
   const entry1 = await channel.guild
     .fetchAuditLogs({
-      type: "ROLE_CREATE"
+      type: "ROLE_CREATE",
     })
-    .then(audit => audit.entries.first());
+    .then((audit) => audit.entries.first());
   console.log(entry1.executor.username);
   const entry = entry1.executor;
   if (!config[channel.guild.id])
@@ -2219,11 +2237,11 @@ client.on("roleCreate", async channel => {
       roleDelLimit: 3,
       kickLimits: 3,
       roleCrLimits: 3,
-      time: 30
+      time: 30,
     };
   if (!anti[channel.guild.id + entry.id]) {
     anti[channel.guild.id + entry.id] = {
-      actions: 1
+      actions: 1,
     };
     setTimeout(() => {
       anti[channel.guild.id + entry.id].actions = "0";
@@ -2243,29 +2261,33 @@ client.on("roleCreate", async channel => {
       channel.guild.members
         .get(entry.id)
         .ban()
-        .catch(e =>
+        .catch((e) =>
           channel.guild.owner.send(
             `**⇏ | ${entry.username} قام بأنشاء الكثير من الرتب **`
           )
         );
       anti[channel.guild.id + entry.id].actions = "0";
-      fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
-      fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
+      fs.writeFile(
+        "./config.json",
+        JSON.stringify(config, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
+      fs.writeFile(
+        "./antigreff.json",
+        JSON.stringify(anti, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
     }
   }
 
-  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(e) {
+  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function (e) {
     if (e) throw e;
   });
-  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(e) {
+  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function (e) {
     if (e) throw e;
   });
 });
@@ -2273,9 +2295,9 @@ client.on("roleCreate", async channel => {
 client.on("guildBanAdd", async (guild, user) => {
   const entry1 = await guild
     .fetchAuditLogs({
-      type: "MEMBER_BAN_ADD"
+      type: "MEMBER_BAN_ADD",
     })
-    .then(audit => audit.entries.first());
+    .then((audit) => audit.entries.first());
   console.log("ban: " + entry1.executor.username);
   const entry = entry1.executor;
   if (!config[guild.id])
@@ -2286,11 +2308,11 @@ client.on("guildBanAdd", async (guild, user) => {
       roleDelLimit: 3,
       kickLimits: 3,
       roleCrLimits: 3,
-      time: 30
+      time: 30,
     };
   if (!anti[guild.id + entry.id]) {
     anti[guild.id + entry.id] = {
-      actions: 1
+      actions: 1,
     };
     setTimeout(() => {
       anti[guild.id + entry.id].actions = 0;
@@ -2306,27 +2328,31 @@ client.on("guildBanAdd", async (guild, user) => {
       guild.members
         .get(entry.id)
         .ban()
-        .catch(e =>
+        .catch((e) =>
           guild.owner.send(`**⇏ | ${entry.username} حاول حظر جميع الأعضاء **`)
         );
       anti[guild.id + entry.id].actions = 0;
-      fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
-      fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
+      fs.writeFile(
+        "./config.json",
+        JSON.stringify(config, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
+      fs.writeFile(
+        "./antigreff.json",
+        JSON.stringify(anti, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
     }
   }
 
-  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(e) {
+  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function (e) {
     if (e) throw e;
   });
-  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(e) {
+  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function (e) {
     if (e) throw e;
   });
 });
@@ -2334,9 +2360,9 @@ client.on("guildBanAdd", async (guild, user) => {
 client.on("guildKickAdd", async (guild, user) => {
   const entry1 = await guild
     .fetchAuditLogs({
-      type: "MEMBER_KICK"
+      type: "MEMBER_KICK",
     })
-    .then(audit => audit.entries.first());
+    .then((audit) => audit.entries.first());
   console.log(entry1.executor.username);
   const entry = entry1.executor;
   if (!config[guild.id])
@@ -2347,11 +2373,11 @@ client.on("guildKickAdd", async (guild, user) => {
       roleDelLimit: 3,
       kickLimits: 3,
       roleCrLimits: 3,
-      time: 30
+      time: 30,
     };
   if (!anti[guild.id + entry.id]) {
     anti[guild.id + entry.id] = {
-      actions: 1
+      actions: 1,
     };
     setTimeout(() => {
       anti[guild.id + entry.id].actions = 0;
@@ -2368,41 +2394,45 @@ client.on("guildKickAdd", async (guild, user) => {
       guild.members
         .get(entry.id)
         .ban()
-        .catch(e =>
+        .catch((e) =>
           guild.owner.send(`**⇏ | ${entry.username} حاول حظر جميع الأعضاء **`)
         );
       anti[guild.id + entry.id].actions = 0;
-      fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
-      fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(
-        e
-      ) {
-        if (e) throw e;
-      });
+      fs.writeFile(
+        "./config.json",
+        JSON.stringify(config, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
+      fs.writeFile(
+        "./antigreff.json",
+        JSON.stringify(anti, null, 2),
+        function (e) {
+          if (e) throw e;
+        }
+      );
     }
   }
 
-  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(e) {
+  fs.writeFile("./config.json", JSON.stringify(config, null, 2), function (e) {
     if (e) throw e;
   });
-  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(e) {
+  fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function (e) {
     if (e) throw e;
   });
 });
 
-client.on("guildMemberRemove", async member => {
+client.on("guildMemberRemove", async (member) => {
   const entry1 = await member.guild
     .fetchAuditLogs()
-    .then(audit => audit.entries.first());
+    .then((audit) => audit.entries.first());
   if (entry1.action === "MEMBER_KICK") {
     const entry2 = await member.guild
       .fetchAuditLogs({
-        type: "MEMBER_KICK"
+        type: "MEMBER_KICK",
       })
-      .then(audit => audit.entries.first());
+      .then((audit) => audit.entries.first());
     const entry = entry2.executor;
     if (!config[member.guild.id])
       config[guild.id] = {
@@ -2412,11 +2442,11 @@ client.on("guildMemberRemove", async member => {
         roleDelLimit: 3,
         kickLimits: 3,
         roleCrLimits: 3,
-        time: 30
+        time: 30,
       };
     if (!anti[member.guild.id + entry.id]) {
       anti[member.guild.id + entry.id] = {
-        actions: 1
+        actions: 1,
       };
       setTimeout(() => {
         anti[member.guild.id + entry.id].actions = 0;
@@ -2436,35 +2466,43 @@ client.on("guildMemberRemove", async member => {
         member.guild.members
           .get(entry.id)
           .ban()
-          .catch(e =>
+          .catch((e) =>
             member.owner.send(
               `**⇏ | ${entry.username} حاول حظر جميع الأعضاء **`
             )
           );
         anti[member.guild.id + entry.id].actions = 0;
-        fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(
-          e
-        ) {
-          if (e) throw e;
-        });
+        fs.writeFile(
+          "./config.json",
+          JSON.stringify(config, null, 2),
+          function (e) {
+            if (e) throw e;
+          }
+        );
         fs.writeFile(
           "./antigreff.json",
           JSON.stringify(anti, null, 2),
-          function(e) {
+          function (e) {
             if (e) throw e;
           }
         );
       }
     }
 
-    fs.writeFile("./config.json", JSON.stringify(config, null, 2), function(e) {
-      if (e) throw e;
-    });
-    fs.writeFile("./antigreff.json", JSON.stringify(anti, null, 2), function(
-      e
-    ) {
-      if (e) throw e;
-    });
+    fs.writeFile(
+      "./config.json",
+      JSON.stringify(config, null, 2),
+      function (e) {
+        if (e) throw e;
+      }
+    );
+    fs.writeFile(
+      "./antigreff.json",
+      JSON.stringify(anti, null, 2),
+      function (e) {
+        if (e) throw e;
+      }
+    );
   }
 });
 
@@ -2473,16 +2511,16 @@ let saveSteve = () => {
   fs.writeFileSync(
     "./KickBots.json",
     JSON.stringify(antibots, null, 2),
-    err => {
+    (err) => {
       if (err) throw err;
     }
   );
 };
-client.on("message", message => {
+client.on("message", (message) => {
   if (!message.guild) return;
   if (!antibots[message.guild.id])
     config[message.guild.id] = {
-      onoff: true
+      onoff: true,
     };
   if (message.content.startsWith(prefix + "antibots on")) {
     if (message.author.bot || !message.channel.guild) return;
@@ -2491,7 +2529,7 @@ client.on("message", message => {
         "**:closed_lock_with_key: لأسباب تتعلق بالحماية تم حصر أوامر الحماية فقط للأونر**"
       );
     antibots[message.guild.id] = {
-      onoff: true
+      onoff: true,
     };
     saveSteve();
     message.channel.send("**AntiBots Join Is On :closed_lock_with_key: **");
@@ -2503,7 +2541,7 @@ client.on("message", message => {
         "**:closed_lock_with_key: لأسباب تتعلق بالحماية تم حصر أوامر الحماية فقط للأونر**"
       );
     antibots[message.guild.id] = {
-      onoff: false
+      onoff: false,
     };
     saveSteve();
     message.channel.send("**AntiBots Join Is Off :unlock: **");
@@ -2511,17 +2549,17 @@ client.on("message", message => {
   saveSteve();
 });
 
-client.on("guildMemberAdd", member => {
+client.on("guildMemberAdd", (member) => {
   if (!antibots[member.guild.id])
     config[member.guild.id] = {
-      onoff: true
+      onoff: true,
     };
   if (antibots[member.guild.id].onoff == false) return;
   if (member.user.bot) return member.ban("Protection from Bots.");
   saveSteve();
 });
 
-client.on("message", async message => {
+client.on("message", async (message) => {
   const moment = require("moment"); //npm i moment
   const ms = require("ms"); //npm i ms
   // var prefix = '' //Bot Prefix !
@@ -2546,7 +2584,7 @@ client.on("message", async message => {
     hours = 12;
   }
 
-  var filter = m => m.author.id === message.author.id;
+  var filter = (m) => m.author.id === message.author.id;
   if (message.content.startsWith(prefix + "gcreate")) {
     let embed1 = new Discord.RichEmbed()
       .setColor()
@@ -2576,40 +2614,40 @@ client.on("message", async message => {
 
     if (!message.guild.member(message.author).hasPermission("MANAGE_GUILD"))
       return message.channel.send(embed1);
-    message.channel.send(embed2).then(msg => {
+    message.channel.send(embed2).then((msg) => {
       message.channel
         .awaitMessages(filter, {
           max: 1,
           time: 20000,
-          errors: ["time"]
+          errors: ["time"],
         })
-        .then(collected => {
+        .then((collected) => {
           let room = message.guild.channels.find(
-            gg => gg.name === collected.first().content
+            (gg) => gg.name === collected.first().content
           );
           if (!room) return message.channel.send(embed3);
           room = collected.first().content;
           collected.first().delete();
-          msg.edit(embed4).then(msg => {
+          msg.edit(embed4).then((msg) => {
             message.channel
               .awaitMessages(filter, {
                 max: 1,
                 time: 20000,
-                errors: ["time"]
+                errors: ["time"],
               })
-              .then(collected => {
+              .then((collected) => {
                 if (!collected.first().content.match(/[1-60][s,m,h,d,w]/g))
                   return message.channel.send(embed5);
                 duration = collected.first().content;
                 collected.first().delete();
-                msg.edit(embed6).then(msg => {
+                msg.edit(embed6).then((msg) => {
                   message.channel
                     .awaitMessages(filter, {
                       max: 1,
                       time: 20000,
-                      errors: ["time"]
+                      errors: ["time"],
                     })
-                    .then(collected => {
+                    .then((collected) => {
                       title = collected.first().content;
                       collected.first().delete();
                       msg.delete();
@@ -2623,18 +2661,19 @@ client.on("message", async message => {
                           );
                         //.setFooter(message.author.username, message.author.avatarURL);
                         message.guild.channels
-                          .find(gg => gg.name === room)
+                          .find((gg) => gg.name === room)
                           .send(" :tada: **Giveaway** :tada:", {
-                            embed: giveEmbed
+                            embed: giveEmbed,
                           })
-                          .then(m => {
+                          .then((m) => {
                             let re = m.react("🎉");
                             setTimeout(() => {
                               let users = m.reactions.get("🎉").users;
                               let list = users
                                 .array()
                                 .filter(
-                                  u => (u.id !== m.author.id) !== client.user.id
+                                  (u) =>
+                                    (u.id !== m.author.id) !== client.user.id
                                 );
                               let gFilter =
                                 list[
@@ -2650,7 +2689,7 @@ client.on("message", async message => {
                                   .setFooter("Ended at :")
                                   .setTimestamp();
                                 m.edit("** 🎉 GIVEAWAY ENDED 🎉**", {
-                                  embed: endEmbed
+                                  embed: endEmbed,
                                 });
                               } else {
                                 let endEmbed = new Discord.RichEmbed()
@@ -2660,14 +2699,14 @@ client.on("message", async message => {
                                   .setFooter("Ended at :")
                                   .setTimestamp();
                                 m.edit("** 🎉 GIVEAWAY ENDED 🎉**", {
-                                  embed: endEmbed
+                                  embed: endEmbed,
                                 });
                               }
                               if (gFilter === undefined) {
                                 // message.guild.channels.find("name" , room).send("No enough number of reactions")
                               } else {
                                 message.guild.channels
-                                  .find(gg => gg.name === room)
+                                  .find((gg) => gg.name === room)
                                   .send(
                                     `**Congratulations ${gFilter}! You won The \`${title}\`**`
                                   );
@@ -2696,35 +2735,35 @@ client.on("message", async message => {
 const replyMSG = JSON.parse(fs.readFileSync("./replyMSG.json", "utf8"));
 
 function saveReplay() {
-  fs.writeFile("./replyMSG.json", JSON.stringify(replyMSG), function(err) {
+  fs.writeFile("./replyMSG.json", JSON.stringify(replyMSG), function (err) {
     if (err) throw err;
   });
 }
 
 /////كود صنع رد تلقائي
-client.on("message", async message => {
+client.on("message", async (message) => {
   if (message.content.startsWith(prefix + "reply")) {
     if (message.author.bot || message.channel.type == "dm") return undefined;
     if (!message.member.hasPermission("ADMINISTRATOR")) return;
     if (!replyMSG[message.author.id])
       replyMSG[message.author.id] = {
         contentmessage: "none",
-        replayMessage: "none"
+        replayMessage: "none",
       };
     saveReplay();
     let contmessage;
 
-    let filter = m => m.author.id === message.author.id;
-    message.channel.send(" |** من فضلك اكتب الرساله الان...** ").then(msg => {
+    let filter = (m) => m.author.id === message.author.id;
+    message.channel.send(" |** من فضلك اكتب الرساله الان...** ").then((msg) => {
       message.channel
         .awaitMessages(filter, {
           //R.I.P Royal Bot!
           maxMatches: 1,
           time: 12000,
-          errors: ["time"]
+          errors: ["time"],
         })
 
-        .then(collected => {
+        .then((collected) => {
           contmessage = collected.first().content;
           msg.edit(":scroll: | من فضلك اكتب الرد الان... :pencil2: ");
 
@@ -2732,13 +2771,13 @@ client.on("message", async message => {
             .awaitMessages(filter, {
               maxMatches: 1,
               time: 12000,
-              errors: ["time"]
+              errors: ["time"],
             })
 
-            .then(async collectedd => {
+            .then(async (collectedd) => {
               replyMSG[message.author.id] = {
                 contentmessage: contmessage,
-                replayMessage: collectedd.first().content
+                replayMessage: collectedd.first().content,
               };
               saveReplay();
               var embed1 = new Discord.RichEmbed()
@@ -2766,7 +2805,7 @@ client.on("message", async message => {
   }
 });
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (
     !replyMSG[message.author.id] ||
     !replyMSG[message.author.id].contentmessage ||
@@ -2785,13 +2824,13 @@ client.on("message", message => {
 
 const credits = JSON.parse(fs.readFileSync("./credits.json"));
 var time = require("./time.json");
-client.on("message", async message => {
+client.on("message", async (message) => {
   if (message.author.bot || message.channel.type === "dm") return;
   let args = message.content.split(" ");
   let author = message.author.id;
   if (!credits[author])
     credits[author] = {
-      credits: 0
+      credits: 0,
     };
   fs.writeFileSync("./credits.json", JSON.stringify(credits, null, 4));
   if (args[0].toLowerCase() == `${prefix}credits`) {
@@ -2799,7 +2838,9 @@ client.on("message", async message => {
     const mentionn = message.mentions.users.first();
     if (!args[2]) {
       message.channel.send(
-        `**${mention.username}, your :credit_card: balance is \`$${credits[mention.id].credits}\`**`
+        `**${mention.username}, your :credit_card: balance is \`$${
+          credits[mention.id].credits
+        }\`**`
       );
     } else if (mentionn && args[2]) {
       if (isNaN(args[2]) || [",", "."].includes(args[2]))
@@ -2844,17 +2885,17 @@ client.on("message", async message => {
           }, Transfer Fees: \`${tax}\`, Amount: \`$${resulting.toLocaleString()}\`**
 type these numbers to confirm: `
         )
-        .then(async essss => {
-          message.channel.send(`\`${num}\``).then(m => {
+        .then(async (essss) => {
+          message.channel.send(`\`${num}\``).then((m) => {
             message.channel
-              .awaitMessages(r => r.author.id === message.author.id, {
+              .awaitMessages((r) => r.author.id === message.author.id, {
                 max: 1,
                 time: 20000,
-                errors: ["time"]
+                errors: ["time"],
               })
-              .then(collected => {
+              .then((collected) => {
                 if (collected.first().content === num) {
-                  essss.delete()
+                  essss.delete();
                   message.channel.send(
                     `**:moneybag: | ${
                       message.author.username
@@ -2898,10 +2939,10 @@ type these numbers to confirm: `
         `**:stopwatch: |  ${
           message.author.username
         }, your daily :dollar: credits refreshes in ${pretty(times, {
-          verbose: true
+          verbose: true,
         })}.**`
       );
-      fs.writeFile("./time.json", JSON.stringify(time), function(e) {
+      fs.writeFile("./time.json", JSON.stringify(time), function (e) {
         if (e) throw e;
       });
     } else {
@@ -2911,14 +2952,14 @@ type these numbers to confirm: `
       message.channel.send(
         `**:atm:  | ${message.author.username}, you received your :yen: ${ammount} daily credits!**`
       );
-      fs.writeFile("./credits.json", JSON.stringify(credits), function(e) {
+      fs.writeFile("./credits.json", JSON.stringify(credits), function (e) {
         if (e) throw e;
       });
     }
   }
 }); //
 
-client.on("message", async message => {
+client.on("message", async (message) => {
   let Fire = message.content.split(" ")[0].substring(prefix.length);
   let mention = message.mentions.users.first() || message.author;
   if (Fire === "addcredits") {
@@ -2953,14 +2994,14 @@ const welcome = JSON.parse(fs.readFileSync("./welcomer.json", "utf8")); //ملف
 
 //كود الويلكم
 
-client.on("guildMemberAdd", async member => {
+client.on("guildMemberAdd", async (member) => {
   if (!welcome) return;
   if (!welcome[member.guild.id]) return;
   var findingWlcChannel = welcome[member.guild.id]
     ? welcome[member.guild.id].channel
     : "null";
   const channel = await member.guild.channels.find(
-    r => r.name == findingWlcChannel
+    (r) => r.name == findingWlcChannel
   );
   if (!channel) return;
   if (channel) {
@@ -3016,37 +3057,37 @@ const wait = require("util").promisify(setTimeout);
 client.on("ready", async () => {
   wait(1000);
 
-  await client.guilds.forEach(g => {
-    g.fetchInvites().then(guildInvites => {
+  await client.guilds.forEach((g) => {
+    g.fetchInvites().then((guildInvites) => {
       invites[g.id] = guildInvites;
     });
   });
 });
 var gg2;
 
-client.on("guildMemberAdd", async member => {
+client.on("guildMemberAdd", async (member) => {
   if (!welcome[member.guild.id])
     welcome[member.guild.id] = {
       by: "Off",
-      channel: null
+      channel: null,
     };
 
   if (welcome[member.guild.id].by === "Off") return;
   let channel = member.guild.channels.find(
-    c => c.name == welcome[member.guild.id].channel
+    (c) => c.name == welcome[member.guild.id].channel
   );
   if (!channel) return;
 
-  await member.guild.fetchInvites().then(async guildInvites => {
+  await member.guild.fetchInvites().then(async (guildInvites) => {
     const ei = await invites[member.guild.id];
     invites[member.guild.id] = guildInvites;
-    const invite = await guildInvites.find(i => ei.get(i.code).uses < i.uses);
+    const invite = await guildInvites.find((i) => ei.get(i.code).uses < i.uses);
     const inviter1 = await invite.inviter;
     const inviter =
       (await client.users.get(invite.inviter.id)) ||
       client.users.get(member.guild.owner.user.id);
     const logChannel = member.guild.channels.find(
-      channel => channel.name === `${welcome[member.guild.id].channel}`
+      (channel) => channel.name === `${welcome[member.guild.id].channel}`
     );
     if (!logChannel) return console.log("I can't find welcomeChannel");
     let gg1 = await welcome[member.guild.id].msg.replace(
@@ -3061,18 +3102,18 @@ client.on("guildMemberAdd", async member => {
     setTimeout(() => {
       logChannel.send(`${gg2}`);
     }, 2000);
-    fs.writeFile("./welcome.json", JSON.stringify(welcome), err => {
+    fs.writeFile("./welcome.json", JSON.stringify(welcome), (err) => {
       if (err)
-        console.error(err).catch(err => {
+        console.error(err).catch((err) => {
           console.error(err);
         });
     });
   });
 });
-client.on("message", async message => {
+client.on("message", async (message) => {
   if (!message.channel.guild) return;
   let room = message.content.split(" ").slice(1);
-  let findroom = message.guild.channels.find(r => r.name == room);
+  let findroom = message.guild.channels.find((r) => r.name == room);
   if (message.content.startsWith(prefix + "setWelcomer")) {
     if (!welcome[message.guild.id]) {
       if (!message.channel.guild)
@@ -3098,9 +3139,9 @@ client.on("message", async message => {
         channel: room,
         onoff: "On",
         by: "On",
-        msg: `**Welcome [member], You Joined by [inviter] invite**`
+        msg: `**Welcome [member], You Joined by [inviter] invite**`,
       };
-      fs.writeFile("./welcomer.json", JSON.stringify(welcome), err => {
+      fs.writeFile("./welcomer.json", JSON.stringify(welcome), (err) => {
         if (err) console.error(err);
       });
     } else if (welcome[message.guild.id].channel) {
@@ -3126,28 +3167,28 @@ client.on("message", async message => {
         channel: room,
         onoff: "On",
         by: by,
-        msg: msg
+        msg: msg,
       };
-      fs.writeFile("./welcomer.json", JSON.stringify(welcome), err => {
+      fs.writeFile("./welcomer.json", JSON.stringify(welcome), (err) => {
         if (err) console.error(err);
       });
     }
   }
 });
 
-client.on("message", async message => {
+client.on("message", async (message) => {
   let messageArray = message.content.split(" ");
   if (message.content.startsWith(prefix + "setMessage")) {
     if (!welcome[message.guild.id] || !welcome[message.guild.id].onoff == "On")
       return message.channel.send(
         `**please type \`${prefix}setWelcomer\` first **`
       );
-    let filter = m => m.author.id === message.author.id;
+    let filter = (m) => m.author.id === message.author.id;
     let thisMessage;
     let thisFalse;
     let room = welcome[message.guild.id].channel;
     if (!message.member.hasPermission("MANAGE_GUILD"))
-      return message.channel.send("You don't have permission").then(msg => {
+      return message.channel.send("You don't have permission").then((msg) => {
         msg.delete(4500);
         message.delete(4500);
       });
@@ -3159,17 +3200,17 @@ client.on("message", async message => {
 Ex : 
 \`[member] Joined the server by [inviter]\`**`
       )
-      .then(msg => {
+      .then((msg) => {
         message.channel
           .awaitMessages(filter, {
             max: 1,
             time: 90000,
-            errors: ["time"]
+            errors: ["time"],
           })
-          .then(collected => {
+          .then((collected) => {
             collected.first().delete();
             thisMessage = collected.first().content;
-            msg.edit("**تم الاعداد بنجاح**").then(msg => {
+            msg.edit("**تم الاعداد بنجاح**").then((msg) => {
               let embed = new Discord.RichEmbed()
                 .setTitle("**Done The Welcome Msg Has Been Setup**")
                 .addField("Message:", `${thisMessage}`)
@@ -3180,11 +3221,15 @@ Ex :
                 channel: room,
                 onoff: "On",
                 by: "On",
-                msg: thisMessage
+                msg: thisMessage,
               };
-              fs.writeFile("./welcomer.json", JSON.stringify(welcome), err => {
-                if (err) console.error(err);
-              });
+              fs.writeFile(
+                "./welcomer.json",
+                JSON.stringify(welcome),
+                (err) => {
+                  if (err) console.error(err);
+                }
+              );
             });
           });
       });
@@ -3193,10 +3238,10 @@ Ex :
 
 ///كود منشن بوتات
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content === prefix + "ls") {
     var list_all = [];
-    message.guild.members.forEach(bb => {
+    message.guild.members.forEach((bb) => {
       if (!bb.user.bot) return;
       list_all.push(`<@${bb.user.id}>`);
     });
@@ -3207,15 +3252,15 @@ client.on("message", message => {
 ////كود رابط
 ////تعديل غير اساسي
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.split(" ")[0] === prefix + "رابط") {
     message.channel
       .createInvite({
         thing: true,
         maxUses: 5,
-        maxAge: 86400
+        maxAge: 86400,
       })
-      .then(invite => message.author.send(invite.url));
+      .then((invite) => message.author.send(invite.url));
     const embed = new Discord.RichEmbed()
       .setColor("RANDOM")
       .setDescription(
@@ -3225,7 +3270,7 @@ client.on("message", message => {
       .setAuthor(client.user.username, client.user.avatarURL)
       .setFooter("طلب بواسطة: " + message.author.tag);
 
-    message.channel.sendEmbed(embed).then(message => {
+    message.channel.sendEmbed(embed).then((message) => {
       message.delete(10000);
     });
     const Embed11 = new Discord.RichEmbed().setColor("RANDOM")
@@ -3240,17 +3285,14 @@ client.on("message", message => {
 ////كود الفويس اونلاين
 
 let vojson = JSON.parse(fs.readFileSync("vojson.json", "utf8")); // ملف تخزين الفويس اونلاين
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.startsWith(prefix + "setVc")) {
-    let channel = message.content
-      .split(" ")
-      .slice(1)
-      .join(" ");
+    let channel = message.content.split(" ").slice(1).join(" ");
     if (!message.member.hasPermission("MANAGE_GUILD"))
       return message.channel.send(
         "**ADMINISTRATOR ليس لديك صلاحية :rolling_eyes: ** "
       );
-    let channelfind = message.guild.channels.find(c => c.name == channel);
+    let channelfind = message.guild.channels.find((c) => c.name == channel);
     if (!channel)
       return message.channel.send(
         "Please Type The Voice Channel Name Example: " +
@@ -3261,10 +3303,12 @@ client.on("message", message => {
     vojson[message.guild.id] = {
       stats: "enable",
       chid: channelfind.id,
-      guild: message.guild.id
+      guild: message.guild.id,
     };
     channelfind.setName(
-      `Voice Online : ${message.guild.members.filter(m => m.voiceChannel).size}` ///تعديل غير اساسي تعديل اسم روم الفويس اونلاين
+      `Voice Online : ${
+        message.guild.members.filter((m) => m.voiceChannel).size
+      }` ///تعديل غير اساسي تعديل اسم روم الفويس اونلاين
     );
     message.channel.send("**Done The Voice Online  Is Turned On**");
   }
@@ -3276,16 +3320,16 @@ client.on("message", message => {
       );
 
     message.guild.channels
-      .find(gg => gg.name === vojson[message.guild.id].chid)
+      .find((gg) => gg.name === vojson[message.guild.id].chid)
       .delete();
     vojson[message.guild.id] = {
       stats: "disable",
       chid: "undefined",
-      guild: message.guild.id
+      guild: message.guild.id,
     };
     message.channel.send("**Done The Voice Online Is Turned Off**");
   }
-  fs.writeFile("./vojson.json", JSON.stringify(vojson), err => {
+  fs.writeFile("./vojson.json", JSON.stringify(vojson), (err) => {
     if (err) console.error(err);
   });
 });
@@ -3295,7 +3339,7 @@ client.on("voiceStateUpdate", (oldMember, newMember) => {
     vojson[oldMember.guild.id] = {
       stats: "disable",
       chid: "undefined",
-      guild: "undefined"
+      guild: "undefined",
     };
   if (vojson[oldMember.guild.id].stats === "enable") {
     let ch = vojson[oldMember.guild.id].chid;
@@ -3304,7 +3348,7 @@ client.on("voiceStateUpdate", (oldMember, newMember) => {
     let guildid = vojson[oldMember.guild.id].guild;
     channel.setName(
       `Voice Online : ${
-        oldMember.guild.members.filter(m => m.voiceChannel).size
+        oldMember.guild.members.filter((m) => m.voiceChannel).size
       }` ///تعديل غير اساسي تغير اسم روم الفويس اونلاين
     );
   }
@@ -3319,60 +3363,60 @@ client.on("ready", () => {
 
 ////تعديل غير اساسي
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.startsWith(prefix + "تقديم")) {
     if (!message.channel.guild) return;
     if (message.author.bot) return;
-    let channel = message.guild.channels.find(gg => gg.name === "التقديمات");
+    let channel = message.guild.channels.find((gg) => gg.name === "التقديمات");
     if (!channel)
       return message.reply(
         "**لانشاء روم التقديمات ${prefix}room1 من فضلك اكتب الامر**"
       );
     if (channel) {
-      message.channel.send(message.member + ", **:timer:**").then(m => {
+      message.channel.send(message.member + ", **:timer:**").then((m) => {
         m.edit(message.member + ", **اسمك الحقيقى  ✍**");
         m.channel
-          .awaitMessages(m1 => m1.author == message.author, {
+          .awaitMessages((m1) => m1.author == message.author, {
             maxMatches: 1,
-            time: 60 * 1000
+            time: 60 * 1000,
           })
-          .then(m1 => {
+          .then((m1) => {
             m1 = m1.first();
             var name = m1.content;
             m1.delete();
-            m.edit(message.member + ", **:timer:**").then(m => {
+            m.edit(message.member + ", **:timer:**").then((m) => {
               m.edit(message.member + ", **كم عمرك 🎓**");
               setTimeout(() => {
                 m.delete();
               }, 10000);
               m.channel
-                .awaitMessages(m2 => m2.author == message.author, {
+                .awaitMessages((m2) => m2.author == message.author, {
                   maxMatches: 1,
-                  time: 60 * 1000
+                  time: 60 * 1000,
                 })
-                .then(m2 => {
+                .then((m2) => {
                   m2 = m2.first();
                   var age = m2.content;
                   m2.delete();
                   message.channel
                     .send(message.member + ", **:timer:**")
-                    .then(m => {
+                    .then((m) => {
                       m.edit(message.member + ", **هل تتفاعل في الرتبه🎙**");
                       setTimeout(() => {
                         m.delete();
                       }, 10000);
                       m.channel
-                        .awaitMessages(m1 => m1.author == message.author, {
+                        .awaitMessages((m1) => m1.author == message.author, {
                           maxMatches: 1,
-                          time: 60 * 1000
+                          time: 60 * 1000,
                         })
-                        .then(m3 => {
+                        .then((m3) => {
                           m3 = m3.first();
                           var ask = m3.content;
                           m3.delete();
                           message.channel
                             .send(message.member + ", **:timer:**")
-                            .then(m => {
+                            .then((m) => {
                               m.edit(
                                 message.member + ", **هل ستحترم القوانين ؟ 📑**"
                               );
@@ -3381,65 +3425,66 @@ client.on("message", message => {
                               }, 10000);
                               m.channel
                                 .awaitMessages(
-                                  m1 => m1.author == message.author,
+                                  (m1) => m1.author == message.author,
                                   { maxMatches: 1, time: 60 * 1000 }
                                 )
-                                .then(m4 => {
+                                .then((m4) => {
                                   m4 = m4.first();
                                   var ask2 = m4.content;
                                   m4.delete();
                                   message.channel
                                     .send(message.member + ", **:timer:**")
-                                    .then(m => {
+                                    .then((m) => {
                                       m.edit(
                                         message.member +
                                           ", **لماذا يجب علينا ان نقبلك ؟ وما هي الرتبه التي تريدها 🤔**"
                                       );
                                       m.channel
                                         .awaitMessages(
-                                          m1 => m1.author == message.author,
+                                          (m1) => m1.author == message.author,
                                           { maxMatches: 1, time: 60 * 1000 }
                                         )
-                                        .then(m5 => {
+                                        .then((m5) => {
                                           m5 = m5.first();
                                           var ask3 = m5.content;
                                           m5.delete();
                                           m.edit(
                                             message.member +
                                               ", **....جارى جمع البيانات**"
-                                          ).then(mtime => {
+                                          ).then((mtime) => {
                                             setTimeout(() => {
-                                              let embed = new Discord.RichEmbed()
-                                                .setColor("RANDOM")
-                                                .setTitle(
-                                                  `**تقديم على رتبه** [__**${message.guild.name}**__]`
-                                                )
-                                                .addField(
-                                                  "**`الاسم`**",
-                                                  `${name}`,
-                                                  true
-                                                )
-                                                .addField(
-                                                  "**`العمر`**",
-                                                  `${age}`,
-                                                  true
-                                                )
-                                                .addField(
-                                                  "**`هل سوف يتفاعل ؟`**",
-                                                  `${ask}`
-                                                )
-                                                .addField(
-                                                  "**`هل سوف يحترم القوانين ؟`**",
-                                                  `${ask2}`
-                                                )
-                                                .addField(
-                                                  "**`لماذا يجب علينا قبوله|وماهى الرتبه اللتي يريدها`**",
-                                                  `${ask3}`
-                                                )
-                                                .setFooter(
-                                                  `Name : ${message.author.username}\nID User : ${message.author.id}`,
-                                                  "https://images-ext-2.discordapp.net/external/JpyzxW2wMRG2874gSTdNTpC_q9AHl8x8V4SMmtRtlVk/https/orcid.org/sites/default/files/files/ID_symbol_B-W_128x128.gif"
-                                                );
+                                              let embed =
+                                                new Discord.RichEmbed()
+                                                  .setColor("RANDOM")
+                                                  .setTitle(
+                                                    `**تقديم على رتبه** [__**${message.guild.name}**__]`
+                                                  )
+                                                  .addField(
+                                                    "**`الاسم`**",
+                                                    `${name}`,
+                                                    true
+                                                  )
+                                                  .addField(
+                                                    "**`العمر`**",
+                                                    `${age}`,
+                                                    true
+                                                  )
+                                                  .addField(
+                                                    "**`هل سوف يتفاعل ؟`**",
+                                                    `${ask}`
+                                                  )
+                                                  .addField(
+                                                    "**`هل سوف يحترم القوانين ؟`**",
+                                                    `${ask2}`
+                                                  )
+                                                  .addField(
+                                                    "**`لماذا يجب علينا قبوله|وماهى الرتبه اللتي يريدها`**",
+                                                    `${ask3}`
+                                                  )
+                                                  .setFooter(
+                                                    `Name : ${message.author.username}\nID User : ${message.author.id}`,
+                                                    "https://images-ext-2.discordapp.net/external/JpyzxW2wMRG2874gSTdNTpC_q9AHl8x8V4SMmtRtlVk/https/orcid.org/sites/default/files/files/ID_symbol_B-W_128x128.gif"
+                                                  );
                                               channel.send(embed);
                                             }, 2500);
                                             setTimeout(() => {
@@ -3460,22 +3505,22 @@ client.on("message", message => {
   }
 });
 
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.startsWith(prefix + "room1")) {
     if (!message.channel.guild) return;
     if (message.author.bot) return;
     if (!message.member.hasPermission("`MANAGE_CHANNELS"))
       return message.reply("**تحتاج الى `MANAGE_CHANNELS`**");
-    message.guild.createChannel("التقديمات", "text").then(c => {
+    message.guild.createChannel("التقديمات", "text").then((c) => {
       c.overwritePermissions(message.guild.id, {
-        SEND_MESSAGES: false
+        SEND_MESSAGES: false,
       });
     });
     message.channel.send("**✅ تم انشاء روم التقديمات بنجاح**");
   }
 });
 
-client.on("message", message => {
+client.on("message", (message) => {
   var args = message.content.split(" ").slice(1);
   var msg = message.content.toLowerCase();
   if (!message.guild) return;
@@ -3487,13 +3532,9 @@ client.on("message", message => {
       return message.reply("**:x: يرجى وضع الشخص المراد سحب منه الرتبة**");
     if (!args[1])
       return message.reply("**:x: يرجى وضع الرتبة المراد سحبها من الشخص**");
-    var role = msg
-      .split(" ")
-      .slice(2)
-      .join(" ")
-      .toLowerCase();
+    var role = msg.split(" ").slice(2).join(" ").toLowerCase();
     var role1 = message.guild.roles
-      .filter(r => r.name.toLowerCase().indexOf(role) > -1)
+      .filter((r) => r.name.toLowerCase().indexOf(role) > -1)
       .first();
     if (!role1)
       return message.reply("**:x: يرجى وضع الرتبة المراد سحبها من الشخص**");
@@ -3518,7 +3559,7 @@ client.on("message", message => {
           "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
         );
 
-      message.guild.members.forEach(m => m.removeRole(role1));
+      message.guild.members.forEach((m) => m.removeRole(role1));
       return message.reply(
         "**:white_check_mark: [ " + role1.name + " ] تم سحب من الكل رتبة**"
       );
@@ -3529,8 +3570,8 @@ client.on("message", message => {
         );
 
       message.guild.members
-        .filter(m => m.user.bot)
-        .forEach(m => m.removeRole(role1));
+        .filter((m) => m.user.bot)
+        .forEach((m) => m.removeRole(role1));
       return message.reply(
         "**:white_check_mark: [ " + role1.name + " ] تم سحب من البوتات رتبة**"
       );
@@ -3541,8 +3582,8 @@ client.on("message", message => {
         );
 
       message.guild.members
-        .filter(m => !m.user.bot)
-        .forEach(m => m.removeRole(role1));
+        .filter((m) => !m.user.bot)
+        .forEach((m) => m.removeRole(role1));
       return message.reply(
         "**:white_check_mark: [ " + role1.name + " ] تم سحب من البشريين رتبة**"
       );
@@ -3552,13 +3593,9 @@ client.on("message", message => {
       return message.reply("**:x: يرجى وضع الشخص المراد اعطائها الرتبة**");
     if (!args[1])
       return message.reply("**:x: يرجى وضع الرتبة المراد اعطائها للشخص**");
-    var role = msg
-      .split(" ")
-      .slice(2)
-      .join(" ")
-      .toLowerCase();
+    var role = msg.split(" ").slice(2).join(" ").toLowerCase();
     var role1 = message.guild.roles
-      .filter(r => r.name.toLowerCase().indexOf(role) > -1)
+      .filter((r) => r.name.toLowerCase().indexOf(role) > -1)
       .first();
     if (!role1)
       return message.reply("**:x: يرجى وضع الرتبة المراد اعطائها للشخص**");
@@ -3582,7 +3619,7 @@ client.on("message", message => {
         return message.channel.send(
           "انت لا تمتلك الصلاحيات الكافية :rolling_eyes:"
         );
-      message.guild.members.forEach(m => m.addRole(role1));
+      message.guild.members.forEach((m) => m.addRole(role1));
       return message.reply(
         "**:white_check_mark: [ " + role1.name + " ] تم اعطاء الكل رتبة**"
       );
@@ -3593,8 +3630,8 @@ client.on("message", message => {
         );
 
       message.guild.members
-        .filter(m => m.user.bot)
-        .forEach(m => m.addRole(role1));
+        .filter((m) => m.user.bot)
+        .forEach((m) => m.addRole(role1));
       return message.reply(
         "**:white_check_mark: [ " + role1.name + " ] تم اعطاء البوتات رتبة**"
       );
@@ -3605,8 +3642,8 @@ client.on("message", message => {
         );
 
       message.guild.members
-        .filter(m => !m.user.bot)
-        .forEach(m => m.addRole(role1));
+        .filter((m) => !m.user.bot)
+        .forEach((m) => m.addRole(role1));
       return message.reply(
         "**:white_check_mark: [ " + role1.name + " ] تم اعطاء البشريين رتبة**"
       );
@@ -3614,16 +3651,15 @@ client.on("message", message => {
   }
 });
 
-client.on("message", async message => {
+client.on("message", async (message) => {
   if (!message.guild) return;
   let mention = message.mentions.members.first();
-  let role = message.content
-    .split(" ")
-    .slice(2)
-    .join(" ");
-  let mySupport = message.guild.roles.find(gg => gg.name === role);
+  let role = message.content.split(" ").slice(2).join(" ");
+  let mySupport = message.guild.roles.find((gg) => gg.name === role);
   if (message.content.startsWith(prefix + "قبول")) {
-    let acRoom = message.guild.channels.find(gg => gg.name === "القبول-الرفض");
+    let acRoom = message.guild.channels.find(
+      (gg) => gg.name === "القبول-الرفض"
+    );
     if (!acRoom)
       return message.reply(
         `${prefix}room2 من فضلك انشاء روم **القبول-الرفض** او اكتب الامر`
@@ -3650,7 +3686,7 @@ client.on("message", async message => {
   }
 });
 
-client.on("message", async message => {
+client.on("message", async (message) => {
   if (message.content.startsWith(prefix + "رفض")) {
     if (!message.channel.guild) return;
 
@@ -3671,24 +3707,24 @@ client.on("message", async message => {
         `**${mention} تم رفضك للأسف **
 السبب : \`${reason}\``
       )
-      .then(m => m.react("✅"));
+      .then((m) => m.react("✅"));
   }
 });
-client.on("message", message => {
+client.on("message", (message) => {
   if (message.content.startsWith(prefix + "room2")) {
     if (!message.channel.guild) return;
     if (message.author.bot) return;
     if (!message.member.hasPermission("MANAGE_CHANNELS"))
       return message.reply("**تحتاج الى `MANAGE_CHANNELS`**");
-    message.guild.createChannel("القبول-الرفض", "text").then(c => {
+    message.guild.createChannel("القبول-الرفض", "text").then((c) => {
       c.overwritePermissions(message.guild.id, {
-        SEND_MESSAGES: false
+        SEND_MESSAGES: false,
       });
     });
     message.channel.send("**✅ تم انشاء روم القبول والرفض بنجاح**");
   }
 });
-client.on("message", async msg => {
+client.on("message", async (msg) => {
   if (msg.author.bot) return undefined;
   if (!msg.content.startsWith(prefix)) return undefined;
 
@@ -3731,19 +3767,19 @@ let cmds = {
   repeat: { cmd: "repeat", a: ["re", "تكرار"] },
   forceskip: { cmd: "forceskip", a: ["تخطي الكل", "fskip"] },
   skipto: { cmd: "skipto", a: ["st", "اذهب الى"] },
-  nowplaying: { cmd: "Nowplaying", a: ["np", "الان"] }
+  nowplaying: { cmd: "Nowplaying", a: ["np", "الان"] },
 };
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
-Object.keys(cmds).forEach(key => {
+Object.keys(cmds).forEach((key) => {
   var value = cmds[key];
   var command = value.cmd;
   client.commands.set(command, command);
 
   if (value.a) {
-    value.a.forEach(alias => {
+    value.a.forEach((alias) => {
       client.aliases.set(alias, command);
     });
   }
@@ -3761,14 +3797,11 @@ client.on("ready", () => {
   console.log(`Users: ${client.users.size}`);
 });
 
-client.on("message", async msg => {
+client.on("message", async (msg) => {
   if (msg.author.bot) return undefined;
   if (!msg.content.startsWith(prefix)) return undefined;
 
-  const args = msg.content
-    .slice(prefix.length)
-    .trim()
-    .split(/ +/g);
+  const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
   const url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
@@ -3861,7 +3894,7 @@ client.on("message", async msg => {
         title: video.title,
         duration: dur,
         msDur: ms,
-        url: `https://www.youtube.com/watch?v=${video.id}`
+        url: `https://www.youtube.com/watch?v=${video.id}`,
       };
       if (!serverQueue) {
         const queueConstruct = {
@@ -3872,7 +3905,7 @@ client.on("message", async msg => {
           volume: 25, //// تعديل درجة الصوت الاساسية
           requester: msg.author,
           playing: true,
-          repeating: false
+          repeating: false,
         };
         active.set(msg.guild.id, queueConstruct);
 
@@ -3895,7 +3928,7 @@ client.on("message", async msg => {
         else
           return msg.channel
             .send(":watch: Loading... [`" + args + "`]")
-            .then(m => {
+            .then((m) => {
               setTimeout(() => {
                 //:watch: Loading... [let]
                 m.edit(
@@ -3934,14 +3967,14 @@ client.on("message", async msg => {
       }
       const dispatcher = serverQueue.connection
         .playStream(ytdl(song.url))
-        .on("end", reason => {
+        .on("end", (reason) => {
           //if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
           //else console.log(reason);
           if (serverQueue.repeating) return play(guild, serverQueue.songs[0]);
           serverQueue.songs.shift();
           play(guild, serverQueue.songs[0]);
         })
-        .on("error", error => console.error(error));
+        .on("error", (error) => console.error(error));
       dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
     }
   } else if (cmd === "stop") {
@@ -4206,7 +4239,7 @@ client.on("message", async msg => {
 
     let now = npMsg(q);
 
-    msg.channel.send(now.mes, now.embed).then(me => {
+    msg.channel.send(now.mes, now.embed).then((me) => {
       setInterval(() => {
         let noww = npMsg(q);
         me.edit(noww.mes, noww.embed);
@@ -4247,7 +4280,7 @@ client.on("message", async msg => {
 
       return {
         mes: m,
-        embed: eb
+        embed: eb,
       };
     }
 
