@@ -398,7 +398,7 @@ client.on("message", (message) => {
         message.channel.send(avtEmbed);
       })
       .catch(() => message.channel.send(`يجب عليك وضع ايدي الشخص`));
-  } // Julian
+  } 
 }); // Codes - Toxic Codes
 
 const SQLite = require("sqlite"); // SQLpackage
@@ -569,26 +569,6 @@ client.on("error", (err) => {
   console.log(err);
 });
 */
-client.on("messageCreate", async (message) => {
-  let args = message.cleanContent.split(" ");
-  if (args[0] == `${prefix}roles`) {
-    let space = "                         ";
-    let roles = message.guild.roles
-      .map((r) => r)
-      .sort((a, b) => b.position - a.position);
-    let rr = roles
-      .map(
-        (r) =>
-          `${
-            r.name +
-            space.substring(r.name.length) +
-            message.guild.members.filter((m) => m.roles.includes(r.id)).length
-          } members`
-      )
-      .join("\n");
-    await message.channel.sebd(`\`\`\`${rr}\`\`\``);
-  }
-});
 
 //// كود سحب شخص
 client.on("message", (message) => {
@@ -1226,6 +1206,7 @@ client.on("roleCreate", (role) => {
     logChannel.send(roleCreate);
   });
 });
+
 client.on("roleDelete", (role) => {
   if (!role.guild.member(client.user).hasPermission("EMBED_LINKS")) return;
   if (!role.guild.member(client.user).hasPermission("VIEW_AUDIT_LOG")) return;
