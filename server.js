@@ -267,6 +267,7 @@ client.on("message", (message) => {
     );
   }
 });
+/*
 client.on("message", async (message) => {
   if (message.content.startsWith(prefix + "inf")) {
     //// وهون الامر طبعا
@@ -330,6 +331,7 @@ client.on("message", async (message) => {
     });
   }
 });
+*/
 
 client.on("message", (message) => {
   if (message.author.x5bz) return;
