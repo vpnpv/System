@@ -1754,10 +1754,10 @@ client.on("message", (message) => {
 
 ////تعديل غير اساسي
 /// كود اختيار لون
-
+/*
 client.on("message", (message) => {
   let args = message.content.split(" ").slice(1);
-  if (message.content.split(" ")[0] === "color" ) {
+  if (message.content.split(" ")[0] === prefix + "color") {
     const embedd = new Discord.RichEmbed()
       .setFooter(
         "Requested by " + message.author.username,
@@ -1799,7 +1799,7 @@ client.on("message", (message) => {
     message.member.addRole(message.guild.roles.find("name", `${args[0]}`));
   }
 });
-
+*/
 ///تعديل اساسي
 ///لو تبي تعطل كود بدون حذفه حط هذي الرموز
 
@@ -1832,7 +1832,7 @@ client.on("message", (message) => {
         .addField("**__شكرا لوقتك__**  ", `${member}`)
         .setDescription(`**مع السلامه تشرفنا بك ✋** `)
         .addField("👤   تبقي", `**[ ${member.guild.memberCount} ]**`, true)
-        .setColor("RANDOM")
+        .setColor("#c99c28")
         .setFooter(`نتمنى لكم الاستمتاع`);
 
       var channel = member.guild.channels.find((gg) => gg.name === "log"); //// تعديل اساسي
@@ -1857,7 +1857,7 @@ client.on("message", (message) => {
         "ــــــــــــــــــــــــــــــ"
       )
       .setFooter(`Requested by | ${message.author.tag}`)
-      .setColor("RANDOM");
+      .setColor("#c99c28");
     message.channel.send(E1ping);
   }
 });
@@ -2740,7 +2740,7 @@ client.on("message", async (message) => {
               var embed1 = new Discord.RichEmbed()
                 .setTitle(`Done The Autoreply Setup`)
                 .setThumbnail(message.author.avatarURL)
-                .setColor("GRAY")
+                .setColor("#c99c28")
                 .setDescription(
                   `
                     Message:
