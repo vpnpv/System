@@ -607,7 +607,7 @@ client.on("message", (message) => {
           var embed = new Discord.RichEmbed()
             .setTitle(`You are Moved in ${message.guild.name} `)
             .setColor("#c99c28")
-            .setTitle(`✽ **Premium**`)
+            .setTitle(` **Done**`)
 
             .setDescription(
               `**<@${message.author.id}> Moved You To His Channel!\nServer --> ${message.guild.name}**`
@@ -658,7 +658,7 @@ client.on("message", function (message) {
                   "**```fix\n" +
                   messagesDeleted +
                   " " +
-                  ": عدد الرسائل التي تم مسحها" +
+                  " عدد الرسائل التي تم مسحها" +
                   "```**"
               )
               .then((m) => m.delete(5000));
@@ -674,7 +674,7 @@ client.on("message", function (message) {
                 "**```fix\n" +
                 args[1] +
                 " " +
-                ": عدد الرسائل التي تم مسحها" +
+                " عدد الرسائل التي تم مسحها" +
                 "```**"
             )
             .then((m) => m.delete(5000));
@@ -691,6 +691,7 @@ client.on("message", function (message) {
 });
 ///تعديل غير اساسي
 ////كود هيلب
+/*
 client.on("message", (message) => {
   if (message.author.bot) return;
   if (message.content.startsWith(prefix + "help")) {
@@ -874,6 +875,7 @@ client.on("message", (message) => {
     }
   }
 });
+*/
 
 ////كود قيف اوي
 client.on("message", async (message) => {
@@ -943,7 +945,7 @@ client.on("message", async (message) => {
                               )
                               .setTitle(title)
                               .setDescription(
-                                `المدة : ${duration / 60000} دقائق`
+                                `المدة : ${duration / 60000} m`
                               )
                               .setFooter(
                                 message.author.username,
@@ -1030,7 +1032,7 @@ client.on("message", (message) => {
       var xd = new Canvas(100 * 11, y + 350)
         .addBeveledImage(image, 0, 0, 100 * 11, y + 350, 100)
         .setTextBaseline("middle")
-        .setColor("white")
+        .setColor("#c99c28")
         .setTextSize(60)
         .addText(`قائمة الألوان`, 375, 40);
       x = 0;
@@ -1048,7 +1050,7 @@ client.on("message", (message) => {
             .setTextAlign("center")
             .setColor(role.hexColor)
             .addBeveledRect(x, y, 60, 60, 15)
-            .setColor("white");
+            .setColor("#c99c28");
           if (`${role.name}`.length > 2) {
             xd.setTextSize(30);
           } else if (`${role.name}`.length > 1) {
@@ -1755,7 +1757,7 @@ client.on("message", (message) => {
 
 client.on("message", (message) => {
   let args = message.content.split(" ").slice(1);
-  if (message.content.split(" ")[0] == prefix + "color") {
+  if (message.content.split(" ")[0] === "color" ) {
     const embedd = new Discord.RichEmbed()
       .setFooter(
         "Requested by " + message.author.username,
