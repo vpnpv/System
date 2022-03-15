@@ -51,7 +51,7 @@ client.on("ready", () => {
 
 //كود تغيير الحالة
 client.on('ready' , () => {
-client.user.setActivity(`Vnland` , {type : 'STREAMING' , url : 'https://www.twitch.tv/vnland'})
+client.user.setActivity(`${prefix}` , {type : 'STREAMING' , url : 'https://www.twitch.tv/rip_dis'})
 });
 
 /*
@@ -79,7 +79,7 @@ client.on("message", (message) => {
 client.on("message", (message) => {
   if (message.content.startsWith(prefix + "تكت")) {
     const reason = message.content.split(" ").slice(1).join(" ");
-    if (!message.guild.roles.exists((gg) => gg.id === "909940957313650710"))
+    if (!message.guild.roles.exists((gg) => gg.id === "952340474457374780"))
       return message.channel.send(`لازم تسوي رتبة اسمها \`Support Team\`.`);
     if (
       message.guild.channels.filter(
@@ -92,7 +92,7 @@ client.on("message", (message) => {
     message.guild
       .createChannel(`ticket-${message.author.tag}`, "text")
       .then((c) => {
-        let role = message.guild.roles.find((gg) => gg.id === "909940957313650710");
+        let role = message.guild.roles.find((gg) => gg.id === "952340474457374780");
         let role2 = message.guild.roles.find((gg) => gg.name === "@everyone");
         c.overwritePermissions(role, {
           SEND_MESSAGES: true,
@@ -122,13 +122,13 @@ client.on("message", (message) => {
       })
       .catch(console.error);
   } else if (message.content.startsWith(prefix + "closet")) {
-    if (!message.guild.roles.exists((gg) => gg.id === "909940957313650710"))
+    if (!message.guild.roles.exists((gg) => gg.id === "952340474457374780"))
       return message.channel.send(` لازم تسوي رتبة اسمها \`Support Team\`.`);
     if (!message.channel.name.startsWith("ticket-"))
       return message.channel.send("This isn't a ticket channel!");
     if (
       !message.member.roles.has(
-        message.guild.roles.filter((r) => r.id === "909940957313650710").first().id
+        message.guild.roles.filter((r) => r.id === "952340474457374780").first().id
       )
     )
       return message.channel.send("You don't have the `Support Team` role!");
